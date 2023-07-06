@@ -1,11 +1,9 @@
-interface ButtonProps {
-  onClick: () => void;
-  children: React.ReactNode;
-}
-const Button: React.FC<ButtonProps> = ({ onClick, children }) => {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+const Button = ({ children, ...rest }: ButtonProps) => {
   return (
     <>
-      <button onClick={onClick}>{children}</button>
+      <button {...rest}>{children}</button>
     </>
   );
 };

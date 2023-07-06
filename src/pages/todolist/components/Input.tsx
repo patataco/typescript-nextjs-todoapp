@@ -1,18 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-interface InputProps {
-  inputValue: string;
-  setInputValue: (value: string) => void;
-}
-const Input: React.FC<InputProps> = ({ inputValue, setInputValue }) => {
+type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+
+const Input = (props: InputProps) => {
   return (
     <>
-      <input
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}
-        value={inputValue}
-      />
+      <input {...props} />
     </>
   );
 };

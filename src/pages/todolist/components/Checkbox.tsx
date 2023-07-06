@@ -1,31 +1,11 @@
-interface CheckboxProps {
-  label: string;
-  item: SelectedItem;
-  selectedItems: Array<SelectedItem>;
-  setSelectedItems: (SelectedItem: object) => void;
-}
-interface SelectedItem {
-  id: number;
-  label: string;
-}
+import React from 'react';
 
-const Checkbox: React.FC<CheckboxProps> = ({
-  selectedItems,
-  setSelectedItems,
-  item,
-}) => {
+type CheckboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>;
+
+const Checkbox = ({ children, ...rest }: CheckboxProps) => {
   return (
     <>
-      <input
-        type="checkbox"
-        id={item.label}
-        onChange={() => {
-          setSelectedItems(item);
-        }}
-      />
-      <label htmlFor={item.label}>
-        <span>{item.label}</span>
-      </label>
+      <input type="checkbox" {...rest} />
     </>
   );
 };
