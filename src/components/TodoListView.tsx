@@ -1,7 +1,9 @@
 import TasksList from '@/components/TasksList';
+import { Task } from '@/type/type';
+import { useCheckbox } from '../../hooks/useCheckbox';
 
-import { useCheckbox } from '../../../hooks/useCheckbox';
-import NewTask from '../../components/NewTask';
+import { TaskProvider, useTasks } from '@/context/TaskContext';
+import NewTask from './NewTask';
 
 const tasks: Task[] = [
   {
@@ -38,27 +40,29 @@ const tasks: Task[] = [
     lastModifiedDateTime: new Date('2023-07-05T17:45:00'),
   },
 ];
-const TodoList = () => {
+const TodoListView = () => {
   const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
 
   return (
-    <div className="mx-auto flex h-screen max-w-5xl items-center justify-center bg-blue-100 ">
-      <div className="h-[800px] w-[600px]  bg-gray-50 ">
-        <div className="flex h-full flex-col items-center gap-6 px-10 py-9">
-          <h1>To-do List</h1>
-          <NewTask />
-          <h2>Tasks</h2>
-          <TasksList
-            tasks={tasks.filter((task) => task.status !== 'completed')}
-          />
-          <h2>Tasks Done</h2>
-          <TasksList
-            tasks={tasks.filter((task) => task.status === 'completed')}
-          />
+    <TaskProvider initialTask={[]}>
+      <div className="flex items-center justify-center h-screen max-w-5xl mx-auto bg-blue-100 ">
+        <div className="h-[800px] w-[600px]  bg-gray-50 ">
+          <div className="flex flex-col items-center h-full gap-6 px-10 py-9">
+            <h1>To-do List</h1>
+            <NewTask />
+            <h2>Tasks</h2>
+            <TasksList
+              tasks={tasks.filter((task) => task.status !== 'completed')}
+            />
+            <h2>Tasks Done</h2>
+            <TasksList
+              tasks={tasks.filter((task) => task.status === 'completed')}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </TaskProvider>
   );
 };
 
-export default TodoList;
+export default TodoListView;

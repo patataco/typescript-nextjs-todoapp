@@ -1,18 +1,18 @@
-interface Task {
-  id: string;
-  title: string;
-  content?: string;
-  categories?: string[];
-  status: Status;
-  startDateTime?: Date;
-  dueDateTime?: Date;
-  createdDateTime?: Date;
-  lastModifiedDateTime?: Date;
-}
-
-type Status =
+export type TaskStatus =
   | 'notStarted'
   | 'inProgress'
   | 'completed'
   | 'waitingOnOthers'
   | 'deferred';
+
+export interface Task {
+  id: string;
+  title: string;
+  content: string | null;
+  categories?: string[];
+  status: TaskStatus;
+  startDateTime: Date | null;
+  dueDateTime: Date | null;
+  createdDateTime: Date;
+  lastModifiedDateTime: Date;
+}
