@@ -7,11 +7,16 @@ import TaskItem from './TaskItem';
 
 const TasksList = ({ tasks }: { tasks: Task[] }) => {
   const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
+
   return (
-    <ul>
-      {tasks.map((task) => {
-        return <TaskItem key={task.id} task={task} />;
-      })}
+    <ul data-testid="task-list">
+      {tasks.length > 0 ? (
+        tasks.map((task) => {
+          return <TaskItem key={task.id} task={task} />;
+        })
+      ) : (
+        <p>Empty</p>
+      )}
     </ul>
   );
 };

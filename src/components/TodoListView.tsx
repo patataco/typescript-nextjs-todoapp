@@ -5,7 +5,7 @@ import { useCheckbox } from '../../hooks/useCheckbox';
 import { TaskProvider, useTasks } from '@/context/TaskContext';
 import NewTask from './NewTask';
 
-const tasks: Task[] = [
+export const tasks: Task[] = [
   {
     id: '1',
     title: '회의 준비',
@@ -42,26 +42,28 @@ const tasks: Task[] = [
 ];
 const TodoListView = () => {
   const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
-
+  const { tasks, deleteTask, addTask, updateTask } = useTasks();
   return (
-    <TaskProvider initialTask={[]}>
-      <div className="flex items-center justify-center h-screen max-w-5xl mx-auto bg-blue-100 ">
-        <div className="h-[800px] w-[600px]  bg-gray-50 ">
-          <div className="flex flex-col items-center h-full gap-6 px-10 py-9">
-            <h1>To-do List</h1>
-            <NewTask />
-            <h2>Tasks</h2>
+    <div className="flex items-center justify-center h-screen max-w-5xl mx-auto bg-blue-100 ">
+      <div className="h-[800px] w-[600px]  bg-gray-50 ">
+        <div className="flex flex-col items-center h-full gap-6 px-10 py-9">
+          <h1>To-do List</h1>
+          <NewTask />
+          <h2>Tasks</h2>
+          <div data-testId="inProgress-section">
             <TasksList
               tasks={tasks.filter((task) => task.status !== 'completed')}
             />
-            <h2>Tasks Done</h2>
+          </div>
+          <h2>Tasks Done</h2>
+          <div data-testId="completed-section">
             <TasksList
               tasks={tasks.filter((task) => task.status === 'completed')}
             />
           </div>
         </div>
       </div>
-    </TaskProvider>
+    </div>
   );
 };
 
