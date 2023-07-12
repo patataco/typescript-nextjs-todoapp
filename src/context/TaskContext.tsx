@@ -10,15 +10,19 @@ interface TaskContextProps {
   addTask: (value: string) => void;
   updateTask: (selectedTask: Task) => void;
   deleteTask: (selectedTask: Task) => void;
+  toggleTaskStatus: (selectedTask: Task) => void;
+  deleteAllTasks: () => void;
 }
 export const TaskContext = createContext<TaskContextProps | undefined>(
   undefined
 );
 
+
 export type TaskProviderProps = PropsWithChildren<InitialTask>;
 
 export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   const [tasks, setTasks] = useState<Task[]>(initialTask);
+
   const addTask = (value: string) => {
     setTasks((prev) => [
       ...prev,
@@ -46,12 +50,42 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
     setTasks(updatedTasks);
   };
 
+  const toggleTaskStatus = (selectedTask: Task) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === selectedTask.id) {
+        const newStatus: Task['status'] =
+          task.status === 'completed' ? 'inProgress' : 'completed';
+        return {
+          ...task,
+          status: newStatus,
+        };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  };
   const deleteTask = (selectedTask: Task) => {
     const updatedTask = tasks.filter((task) => task !== selectedTask);
     setTasks(updatedTask);
   };
+
+  const deleteAllTasks = () => {
+    console.log(tasks);
+    const updatedTask = tasks.filter((task) => task.status !== 'completed');
+    console.log(updatedTask);
+    setTasks(updatedTask);
+  };
   return (
-    <TaskContext.Provider value={{ tasks, addTask, updateTask, deleteTask }}>
+    <TaskContext.Provider
+      value={{
+        tasks,
+        addTask,
+        updateTask,
+        deleteTask,
+        toggleTaskStatus,
+        deleteAllTasks,
+      }}
+    >
       {children}
     </TaskContext.Provider>
   );

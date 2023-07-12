@@ -4,6 +4,8 @@ import { useCheckbox } from '../../hooks/useCheckbox';
 
 import { TaskProvider, useTasks } from '@/context/TaskContext';
 import NewTask from './NewTask';
+import TodoFooter from './TodoFooter';
+import { useEffect } from 'react';
 
 export const tasks: Task[] = [
   {
@@ -41,6 +43,7 @@ export const tasks: Task[] = [
   },
 ];
 const TodoListView = () => {
+ 
   const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
   const { tasks, deleteTask, addTask, updateTask } = useTasks();
   return (
@@ -50,17 +53,16 @@ const TodoListView = () => {
           <h1>To-do List</h1>
           <NewTask />
           <h2>Tasks</h2>
-          <div data-testId="inProgress-section">
-            <TasksList
-              tasks={tasks.filter((task) => task.status !== 'completed')}
-            />
-          </div>
+          <TasksList
+            data-testId="inProgress-section"
+            tasks={tasks.filter((task) => task.status !== 'completed')}
+          />
           <h2>Tasks Done</h2>
-          <div data-testId="completed-section">
-            <TasksList
-              tasks={tasks.filter((task) => task.status === 'completed')}
-            />
-          </div>
+          <TasksList
+            data-testId="completed-section"
+            tasks={tasks.filter((task) => task.status === 'completed')}
+          />
+          <TodoFooter />
         </div>
       </div>
     </div>
