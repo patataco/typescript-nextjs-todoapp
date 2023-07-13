@@ -4,14 +4,16 @@ import { Task } from '@/type/type';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [initialTasks, setInitialTasks] = useState(null);
+  const [initialTasks, setInitialTasks] = useState<Task[] | null>(null);
   useEffect(() => {
     const tasksInStorage = localStorage.getItem('tasks');
-    console.log(tasksInStorage);
+
     if (tasksInStorage) {
       const newTasks = JSON.parse(tasksInStorage);
 
       setInitialTasks(newTasks);
+    } else {
+      setInitialTasks([]);
     }
   }, []);
 
