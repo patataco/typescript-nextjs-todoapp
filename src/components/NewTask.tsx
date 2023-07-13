@@ -11,15 +11,15 @@ const NewTask = () => {
 
   const addTaskItem = () => {
     addTask(inputValue);
+    setInputValue('');
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
       if (inputValue.length < 1) {
         e.preventDefault();
       } else {
         addTaskItem();
-        setInputValue('');
       }
     }
   };

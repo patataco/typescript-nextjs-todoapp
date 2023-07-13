@@ -10,12 +10,47 @@ import '@testing-library/jest-dom';
 import { TaskProvider } from '@/context/TaskContext';
 import TasksList from '@/components/TasksList';
 import { Task } from '@/type/type';
-import TodoListView, { tasks } from '@/components/TodoListView';
+import TodoListView from '@/components/TodoListView';
 import NewTask from '@/components/NewTask';
 import { type } from 'os';
 import Checkbox from '../components/Checkbox';
 import { after } from 'node:test';
 
+export const tasks: Task[] = [
+  {
+    id: '1',
+    title: '회의 준비',
+    content: '다음 주 회의를 위한 준비물 확인',
+    categories: ['업무', '회의'],
+    status: 'notStarted',
+    startDateTime: new Date('2023-07-10T09:00:00'),
+    dueDateTime: new Date('2023-07-10T10:00:00'),
+    createdDateTime: new Date('2023-07-09T14:30:00'),
+    lastModifiedDateTime: new Date('2023-07-09T14:30:00'),
+  },
+  {
+    id: '2',
+    title: '프로젝트 개발',
+    content: '새로운 기능 추가 및 버그 수정',
+    categories: ['업무', '프로젝트'],
+    status: 'inProgress',
+    startDateTime: new Date('2023-07-05T10:00:00'),
+    dueDateTime: new Date('2023-07-15T18:00:00'),
+    createdDateTime: new Date('2023-07-03T09:45:00'),
+    lastModifiedDateTime: new Date('2023-07-07T15:20:00'),
+  },
+  {
+    id: '3',
+    title: '보고서 작성',
+    content: '월간 보고서 작성 및 제출',
+    categories: ['업무', '보고서'],
+    status: 'completed',
+    startDateTime: new Date('2023-07-01T09:00:00'),
+    dueDateTime: new Date('2023-07-05T18:00:00'),
+    createdDateTime: new Date('2023-06-30T17:30:00'),
+    lastModifiedDateTime: new Date('2023-07-05T17:45:00'),
+  },
+];
 describe('유저는 Task 리스트를 볼 수 있으며, 완료되지 않은 테스크는 상단에, 완료된 테스크는 리스트 하단에 표시됩니다.', () => {
   it('추가 버튼을 가진 입력 영역이 보입니다', () => {
     render(
@@ -195,7 +230,7 @@ describe('유저가 Task 내용을 편집한다.', () => {
   test('input창에 변경하고 싶은 내용을 적을 수 있게 되는데, input창에는 기존 테스크 내용이 적혀있고 내용 마지막 글자에 포커스가 있다.', async () => {
     const user = userEvent.setup();
     render(
-      <TaskProvider initialTask={tasks}>
+      <TaskProvider initialTask={[]}>
         <TodoListView />
       </TaskProvider>
     );
@@ -427,6 +462,7 @@ describe('유저가 테스크를 삭제한다.', () => {
 describe('Clear All 버튼을 눌러 완료된 테스크 들을 삭제한다.', () => {
   test('완료 리스트에 완료된 테스크가 존재 할 때 Clear All 버튼을 누르면 Task 리스트에서 완료된 테스크가 모두 삭제되고 Empty란 글자가 나타난다.', async () => {
     const user = userEvent.setup();
+
     render(
       <TaskProvider initialTask={tasks}>
         <TodoListView />

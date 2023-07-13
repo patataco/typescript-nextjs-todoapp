@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { Task } from '@/type/type';
 
-type InitialTask = {
+type InitialTaskProps = {
   initialTask: Task[];
 };
 
@@ -17,27 +17,30 @@ export const TaskContext = createContext<TaskContextProps | undefined>(
   undefined
 );
 
-
-export type TaskProviderProps = PropsWithChildren<InitialTask>;
+export type TaskProviderProps = PropsWithChildren<InitialTaskProps>;
 
 export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   const [tasks, setTasks] = useState<Task[]>(initialTask);
 
+  // const updateStorage = () => {
+  //   localStorage.setItem('tasks', JSON.stringify(tasks));
+  // };
+
   const addTask = (value: string) => {
-    setTasks((prev) => [
-      ...prev,
-      {
-        id: new Date().getTime().toString(36),
-        title: value,
-        content: '',
-        categories: [],
-        status: 'inProgress',
-        startDateTime: new Date(),
-        dueDateTime: null,
-        createdDateTime: new Date(),
-        lastModifiedDateTime: new Date(),
-      },
-    ]);
+    const newTask: Task = {
+      id: new Date().getTime().toString(36),
+      title: value,
+      content: '',
+      categories: [],
+      status: 'inProgress',
+      startDateTime: new Date(),
+      dueDateTime: null,
+      createdDateTime: new Date(),
+      lastModifiedDateTime: new Date(),
+    };
+    // const updatedTasks = [...tasks, newTask];
+    // localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    setTasks((prev) => [...prev, newTask]);
   };
 
   const updateTask = (selectedTask: Task) => {

@@ -32,7 +32,12 @@ const TaskItem = ({ task }: { task: Task }) => {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
+      saveEdit();
+      return;
+    }
+    if (e.key === 'Escape' && e.nativeEvent.isComposing === false) {
+      setInputValue(task.title);
       saveEdit();
     }
   };
