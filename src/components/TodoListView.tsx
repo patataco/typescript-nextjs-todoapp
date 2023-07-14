@@ -30,9 +30,9 @@ const TodoListView = () => {
           <h1>To-do List</h1>
           <NewTask />
           <h2>Tasks</h2>
-          <TasksList data-testId="inProgress-section" tasks={uncompletedList} />
+          <TasksList data-testid="inProgress-section" tasks={uncompletedList} />
           <h2>Tasks Done</h2>
-          <TasksList data-testId="completed-section" tasks={completedList} />
+          <TasksList data-testid="completed-section" tasks={completedList} />
           <TodoFooter />
         </div>
       </div>

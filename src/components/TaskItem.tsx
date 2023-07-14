@@ -22,6 +22,7 @@ const TaskItem = ({ task }: { task: Task }) => {
 
   const handleClickTitle = () => {
     setTitleStatus(true);
+    focus();
   };
 
   const handleInputFocusing = () => {
@@ -46,7 +47,7 @@ const TaskItem = ({ task }: { task: Task }) => {
       <Checkbox
         checked={task.status === 'completed'}
         onChange={handleCheck}
-        data-testId={task.title}
+        data-testid={task.title}
       />
       <div className="flex" onClick={handleClickTitle}>
         {titleStatus ? (
@@ -55,8 +56,8 @@ const TaskItem = ({ task }: { task: Task }) => {
             className={task.status === 'completed' ? 'line-through' : ''}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
-            autoFocus
             onBlur={handleInputFocusing}
+            autoFocus
           />
         ) : (
           <p className={task.status === 'completed' ? 'line-through' : ''}>
@@ -65,7 +66,8 @@ const TaskItem = ({ task }: { task: Task }) => {
         )}
       </div>
       <Button
-        data-testId={`button-${task.title}`}
+        name="delete"
+        data-testid={`button-${task.title}`}
         className="w-10 h-10 bg-cover bg-delete-button"
         onClick={handleDeleteButtonClick}
       />
