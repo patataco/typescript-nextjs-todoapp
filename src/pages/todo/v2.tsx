@@ -4,7 +4,7 @@ import TodoListView from '@/components/TodoListView';
 import { TaskProvider } from '@/context/TaskContext';
 import { Task } from '@/type/type';
 
-export default function Home() {
+export default function V2() {
   const [initialTasks, setInitialTasks] = useState<Task[] | null>(null);
 
   useEffect(() => {

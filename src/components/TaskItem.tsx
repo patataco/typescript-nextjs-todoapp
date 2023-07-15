@@ -1,12 +1,14 @@
-import Input from './Input';
-import { Task } from '@/type/type';
-import { useCheckbox } from '../../hooks/useCheckbox';
-import Checkbox from './Checkbox';
-import Button from './Button';
 import { useState } from 'react';
-import { useInput } from '../../hooks/useInput';
-import { useTasks } from '@/context/TaskContext';
 import { KeyboardEvent } from 'react';
+
+import { useTasks } from '@/hooks/useTasks';
+import { Task } from '@/type/type';
+
+import { useInput } from '../../hooks/useInput';
+
+import Button from './Button';
+import Checkbox from './Checkbox';
+import Input from './Input';
 
 const TaskItem = ({ task }: { task: Task }) => {
   const { inputValue, setInputValue, handleInput } = useInput(task.title);
@@ -68,7 +70,7 @@ const TaskItem = ({ task }: { task: Task }) => {
       <Button
         name="delete"
         data-testid={`button-${task.title}`}
-        className="w-10 h-10 bg-cover bg-delete-button"
+        className="h-10 w-10 bg-delete-button bg-cover"
         onClick={handleDeleteButtonClick}
       />
     </li>

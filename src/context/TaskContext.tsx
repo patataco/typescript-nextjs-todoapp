@@ -1,4 +1,11 @@
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+
 import { Task } from '@/type/type';
 
 type InitialTaskProps = {
@@ -26,10 +33,14 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   //   localStorage.setItem('tasks', JSON.stringify(tasks));
   // };
 
-  const addTask = (value: string) => {
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  const addTask = (title: string) => {
     const newTask: Task = {
       id: new Date().getTime().toString(36),
-      title: value,
+      title: title,
       content: '',
       categories: [],
       status: 'inProgress',
@@ -38,8 +49,7 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
       createdDateTime: new Date(),
       lastModifiedDateTime: new Date(),
     };
-    // const updatedTasks = [...tasks, newTask];
-    // localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
     setTasks((prev) => [...prev, newTask]);
   };
 
@@ -67,6 +77,7 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
     });
     setTasks(updatedTasks);
   };
+
   const deleteTask = (selectedTask: Task) => {
     const updatedTask = tasks.filter((task) => task !== selectedTask);
     setTasks(updatedTask);
@@ -78,6 +89,7 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
     console.log(updatedTask);
     setTasks(updatedTask);
   };
+
   return (
     <TaskContext.Provider
       value={{
@@ -93,8 +105,7 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
     </TaskContext.Provider>
   );
 };
-
-export const useTasks = () => {
+export const useTasksContext = () => {
   const context = useContext(TaskContext);
   if (!context) {
     throw new Error('Cannot find TodoProvider');

@@ -1,6 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
-import Input from '../src/components/Input';
-import exp from 'constants';
+import { expect, type Page, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:3000');
@@ -28,32 +26,37 @@ const TODO_ITEMS = [
 ];
 
 test.describe('유저는 입력영역에 해야되는 일들을 입력하고 리스트에 추가한다.', () => {
-  test('유저가 입력영역에 해야되는 일들을 입력하고 + 버튼을 클릭하거나 엔터를 누르면 새로운 task가 대기 리스트 마지막에 추가된다', async ({ page }) => {
-    // create a new todo locator
+  test('유저가 입력영역에 해야되는 일들을 입력하고 + 버튼을 클릭하거나 엔터를 누르면 새로운 task가 대기 리스트 마지막에 추가된다', async ({
+    page,
+  }) => {
     const inProgressSection = page.getByTestId('inProgress-section');
     const newTodo = page.getByPlaceholder('todo');
     const addButton = page.getByRole('button', { name: '+' });
 
-    // Create 1st todo.
+    //GIVEN : 유저가 입력영역에 해야되는 일들을 입력
     await newTodo.fill(TODO_ITEMS[0]);
+
+    //WHEN : + 버튼을 클릭하거나 엔터를 누르면
     await newTodo.press('Enter');
 
-    // Make sure the list only has one todo item.
+    //THEN : 새로운 task가 대기 리스트 마지막에 추가된다
     await expect(inProgressSection.getByRole('paragraph')).toHaveText([
       TODO_ITEMS[0],
     ]);
 
-    // Create 2nd todo.
+    //GIVEN : 유저가 입력영역에 해야되는 일들을 입력
     await newTodo.fill(TODO_ITEMS[1]);
+
+    //WHEN : + 버튼을 클릭하거나 엔터를 누르면
     await addButton.click();
 
-    // Make sure the list now has two todo items.
+    //THEN : 새로운 task가 대기 리스트 마지막에 추가된다
     await expect(inProgressSection.getByRole('paragraph').nth(1)).toHaveText([
       TODO_ITEMS[1],
     ]);
-
     await checkNumberOfTodosInLocalStorage(page, 2);
 
+    // 유저가 테스크 내용을 입력하는 영역에 아무것도 입력하지 않았을 때, + 버튼은 비활성화 되어 있다.
     await newTodo.fill('');
     await expect(addButton).toBeDisabled();
 
@@ -73,11 +76,17 @@ test.describe('유저가 Task 내용을 편집한다', () => {
   }) => {
     await createDefaultTodos(page);
 
-    // 대기리스트에 Task 가 존재할 때  Tasks 중에 내용을 변경하고 싶은 Task의 라벨을 클릭하면 input창으로 변경된다.
+    // 대기리스트에 Task 가 존재할 때
+
+    // Tasks 중에 내용을 변경하고 싶은 Task의 라벨을 클릭하면
+
+    // input창으로 변경된다.
+
     const inProgressSection = page.getByTestId('inProgress-section');
     const inProgressArea = await page.waitForSelector(
       '[data-testid="inProgress-section"]'
     );
+
     const firstTask = inProgressSection
       .getByRole('paragraph')
       .and(inProgressSection.getByText('buy some cheese'));
@@ -85,6 +94,7 @@ test.describe('유저가 Task 내용을 편집한다', () => {
     const firstInput = inProgressSection
       .getByRole('textbox')
       .and(inProgressSection.getByText('buy some cheese'));
+
     await expect(firstInput).not.toBeInViewport();
 
     await firstTask.click();
@@ -139,6 +149,9 @@ test.describe('유저는 리스트의 태스크들을 완료 처리하거나 완
       .getByRole('checkbox')
       .and(inProgressSection.getByTestId('buy some cheese'));
 
+    await expect(inProgressSection).toHaveText(/buy some cheese/);
+    await expect(completedSection).not.toHaveText(/buy some cheese/);
+
     await firstCheckbox.click();
     firstCheckbox = page
       .getByRole('checkbox')
@@ -148,7 +161,6 @@ test.describe('유저는 리스트의 태스크들을 완료 처리하거나 완
     expect(isChecked).toBe(true);
 
     await expect(inProgressSection).not.toHaveText('buy some cheese');
-
     await expect(completedSection).toHaveText('buy some cheese');
 
     // 그리고 테스크 설명선에 취소선이 생긴다
@@ -201,8 +213,17 @@ test.describe('유저가 테스크를 삭제한다', () => {
     await checkNumberOfTodosInLocalStorage(page, 3);
     // 대기 또는 완료리스트에 테스크가 있을 때 해당하는 테스크 우측 삭제 버튼을 누르면 테스크가 삭제되고 리스트에서 없어진다.
     const taskTitle = page.getByRole('textbox', { name: 'buy some cheese' });
-    const task = page.getByTestId('button-buy some cheese');
-    await task.click();
+
+    const inProgressSection = page.getByTestId('inProgress-section');
+    const taskDeleteButton = inProgressSection
+      .getByRole('listitem')
+      .filter({ hasText: 'buy some cheese' })
+      .getByRole('button');
+
+    // eslint-disable-next-line
+    expect(taskDeleteButton).toBeVisible();
+
+    await taskDeleteButton.click();
     await expect(taskTitle).not.toBeInViewport();
     await checkNumberOfTodosInLocalStorage(page, 2);
   });

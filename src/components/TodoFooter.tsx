@@ -1,4 +1,5 @@
-import { useTasks } from '@/context/TaskContext';
+import { useTasks } from '@/hooks/useTasks';
+
 import Button from './Button';
 
 const TodoFooter = () => {
