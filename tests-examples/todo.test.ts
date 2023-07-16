@@ -1,6 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
-import Input from '../src/components/Input';
-import exp from 'constants';
+import { expect, type Page, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:3000');
@@ -28,7 +26,9 @@ const TODO_ITEMS = [
 ];
 
 test.describe('유저는 입력영역에 해야되는 일들을 입력하고 리스트에 추가한다.', () => {
-  test('유저가 입력영역에 해야되는 일들을 입력하고 + 버튼을 클릭하거나 엔터를 누르면 새로운 task가 대기 리스트 마지막에 추가된다', async ({ page }) => {
+  test('유저가 입력영역에 해야되는 일들을 입력하고 + 버튼을 클릭하거나 엔터를 누르면 새로운 task가 대기 리스트 마지막에 추가된다', async ({
+    page,
+  }) => {
     // create a new todo locator
     const inProgressSection = page.getByTestId('inProgress-section');
     const newTodo = page.getByPlaceholder('todo');
@@ -232,6 +232,6 @@ test.describe('Clear All 버튼을 눌러 완료된 테스크 들을 삭제한�
     await clearButton.click();
     expect(checkbox).not.toBeInViewport();
     const empty = completedSection.getByText('Empty');
-    expect(empty).toBeInViewport();
+    await expect(empty).toBeInViewport();
   });
 });

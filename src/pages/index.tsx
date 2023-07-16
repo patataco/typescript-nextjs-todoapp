@@ -1,7 +1,8 @@
-import TodoListView from '@/components/TodoListView';
-import { TaskProvider, useTasks } from '@/context/TaskContext';
-import { Task } from '@/type/type';
 import { useEffect, useState } from 'react';
+
+import TodoListView from '@/components/TodoListView';
+import { TaskProvider } from '@/context/TaskContext';
+import { Task } from '@/type/type';
 
 export default function Home() {
   const [initialTasks, setInitialTasks] = useState<Task[] | null>(null);

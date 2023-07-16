@@ -1,20 +1,13 @@
-import {
-  fireEvent,
-  getByText,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import '@testing-library/jest-dom';
-import { TaskProvider } from '@/context/TaskContext';
-import TasksList from '@/components/TasksList';
-import { Task } from '@/type/type';
-import TodoListView from '@/components/TodoListView';
+
 import NewTask from '@/components/NewTask';
-import { type } from 'os';
-import Checkbox from '../components/Checkbox';
-import { after } from 'node:test';
+import TasksList from '@/components/TasksList';
+import TodoListView from '@/components/TodoListView';
+import { TaskProvider } from '@/context/TaskContext';
+import { Task } from '@/type/type';
 
 export const tasks: Task[] = [
   {

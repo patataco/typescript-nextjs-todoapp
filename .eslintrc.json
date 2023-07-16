@@ -13,7 +13,6 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:tailwindcss/recommended",
     "plugin:prettier/recommended",
-    "react-app/jest",
     "plugin:jest-dom/recommended"
   ],
   "plugins": [

@@ -1,9 +1,10 @@
+import { KeyboardEvent } from 'react';
+
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { useTasks } from '@/context/TaskContext';
 
 import { useInput } from '../../hooks/useInput';
-import { useTasks } from '@/context/TaskContext';
-import { KeyboardEvent } from 'react';
 
 const NewTask = () => {
   const { inputValue, setInputValue, handleInput } = useInput('');
@@ -35,12 +36,12 @@ const NewTask = () => {
         value={inputValue}
         onChange={handleInput}
         onKeyDown={handleKeyDown}
-        className="flex-1 border-none outline-none h-9"
+        className="h-9 flex-1 border-none outline-none"
       />
       <Button
         disabled={inputValue.length < 1}
         onClick={handleAddButtonClick}
-        className="w-8 h-8 text-xl bg-slate-400"
+        className="h-8 w-8 bg-slate-400 text-xl"
       >
         +
       </Button>
