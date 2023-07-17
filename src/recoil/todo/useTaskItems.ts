@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { TaskContextProps } from '@/context/TaskContext';
@@ -23,6 +24,13 @@ export const useTasksItems: () => TaskContextProps = () => {
 
     setTasks((prev) => [...prev, newTask]);
   };
+
+  useEffect(() => {
+    const savedValue = localStorage.getItem('tasks');
+    if (savedValue) {
+      setTasks(JSON.parse(savedValue));
+    }
+  }, []);
 
   const updateTask = (selectedTask: Task) => {
     const updatedTasks = tasks.map((task) => {
