@@ -2,10 +2,13 @@ import React from 'react';
 
 type CheckboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>;
 
-const Checkbox = ({ children, ...rest }: CheckboxProps) => {
+const Checkbox = ({ children, id, ...rest }: CheckboxProps) => {
   return (
     <>
-      <input type="checkbox" {...rest} />
+      <input type="checkbox" id={id} {...rest} />
+      <label htmlFor={id} className="hidden">
+        {children}
+      </label>
     </>
   );
 };

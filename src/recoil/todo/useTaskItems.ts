@@ -1,37 +1,12 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { useRecoilState } from 'recoil';
 
+import { TaskContextProps } from '@/context/TaskContext';
 import { Task } from '@/type/type';
 
-export type InitialTaskProps = {
-  initialTask: Task[];
-};
+import { tasksState } from './atom';
 
-export interface TaskContextProps {
-  tasks: Task[];
-  addTask: (value: string) => void;
-  updateTask: (selectedTask: Task) => void;
-  deleteTask: (selectedTask: Task) => void;
-  toggleTaskStatus: (selectedTask: Task) => void;
-  deleteAllTasks: () => void;
-}
-export const TaskContext = createContext<TaskContextProps | undefined>(
-  undefined
-);
-
-export type TaskProviderProps = PropsWithChildren<InitialTaskProps>;
-
-export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
-  const [tasks, setTasks] = useState<Task[]>(initialTask);
-
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+export const useTasksItems: () => TaskContextProps = () => {
+  const [tasks, setTasks] = useRecoilState(tasksState);
 
   const addTask = (value: string) => {
     const newTask: Task = {
@@ -83,26 +58,14 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
 
     setTasks(updatedTask);
   };
-  return (
-    <TaskContext.Provider
-      value={{
-        tasks,
-        addTask,
-        updateTask,
-        deleteTask,
-        toggleTaskStatus,
-        deleteAllTasks,
-      }}
-    >
-      {children}
-    </TaskContext.Provider>
-  );
-};
 
-export const useTasksContext = () => {
-  const context = useContext(TaskContext);
-  if (!context) {
-    throw new Error('Cannot find TodoProvider');
-  }
-  return context;
+  return {
+    tasks,
+
+    addTask,
+    updateTask,
+    toggleTaskStatus,
+    deleteAllTasks,
+    deleteTask,
+  };
 };

@@ -1,9 +1,11 @@
-import { useTasks } from '@/context/TaskContext';
+import { useTasksItems } from '@/recoil/todo/useTaskItems';
 
 import Button from './Button';
 
 const TodoFooter = () => {
-  const { deleteAllTasks } = useTasks();
+  // const { deleteAllTasks } = useTasksContext();
+  const { deleteAllTasks } = useTasksItems();
+
   const handleClearButton = () => {
     deleteAllTasks();
   };

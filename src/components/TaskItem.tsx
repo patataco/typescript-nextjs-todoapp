@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { KeyboardEvent } from 'react';
 
-import { useTasks } from '@/context/TaskContext';
+import { useTasksItems } from '@/recoil/todo/useTaskItems';
 import { Task } from '@/type/type';
 
 import { useInput } from '../../hooks/useInput';
@@ -12,7 +12,8 @@ import Input from './Input';
 
 const TaskItem = ({ task }: { task: Task }) => {
   const { inputValue, setInputValue, handleInput } = useInput(task.title);
-  const { updateTask, toggleTaskStatus, deleteTask } = useTasks();
+  // const { updateTask, toggleTaskStatus, deleteTask } = useTasksContext();
+  const { updateTask, toggleTaskStatus, deleteTask } = useTasksItems();
   const [titleStatus, setTitleStatus] = useState(false);
 
   const saveEdit = () => {
@@ -45,24 +46,33 @@ const TaskItem = ({ task }: { task: Task }) => {
     }
   };
   return (
-    <li key={task.id} className="flex ">
+    <li key={task.id} className="flex w-full items-center gap-2">
       <Checkbox
         checked={task.status === 'completed'}
         onChange={handleCheck}
         data-testid={task.title}
-      />
-      <div className="flex" onClick={handleClickTitle}>
+        id={task.title}
+      >
+        {task.title}
+      </Checkbox>
+      <div onClick={handleClickTitle} className="flex-1">
         {titleStatus ? (
           <Input
             value={inputValue}
-            className={task.status === 'completed' ? 'line-through' : ''}
+            className={`${
+              task.status === 'completed' ? 'line-through' : ''
+            } h-8 w-full`}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
             onBlur={handleInputFocusing}
             autoFocus
           />
         ) : (
-          <p className={task.status === 'completed' ? 'line-through' : ''}>
+          <p
+            className={`${
+              task.status === 'completed' ? 'line-through' : ''
+            } w-full max-w-[450px] overflow-hidden whitespace-pre-wrap`}
+          >
             {inputValue}
           </p>
         )}
@@ -70,9 +80,11 @@ const TaskItem = ({ task }: { task: Task }) => {
       <Button
         name="delete"
         data-testid={`button-${task.title}`}
-        className="h-10 w-10 bg-delete-button bg-cover"
+        className="h-10 w-10 text-sm text-slate-400"
         onClick={handleDeleteButtonClick}
-      />
+      >
+        X
+      </Button>
     </li>
   );
 };
