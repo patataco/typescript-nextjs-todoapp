@@ -16,3 +16,11 @@ export interface Task {
   createdDateTime: Date;
   lastModifiedDateTime: Date;
 }
+
+export interface DrawerProps {
+  isOpen: boolean;
+}
+
+export interface NavProps {
+  onClick: () => void;
+}

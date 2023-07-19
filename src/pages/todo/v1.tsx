@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { RecoilRoot } from 'recoil';
 
 import TodoListView from '@/components/TodoListView';
 import { TaskProvider } from '@/context/TaskContext';
@@ -22,9 +23,11 @@ export default function V1() {
 
   return (
     <>
-      <TaskProvider initialTask={initialTasks}>
-        <TodoListView />
-      </TaskProvider>
+      <RecoilRoot>
+        <TaskProvider initialTask={initialTasks}>
+          <TodoListView />
+        </TaskProvider>
+      </RecoilRoot>
     </>
   );
 }

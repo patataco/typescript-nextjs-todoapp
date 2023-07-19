@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { KeyboardEvent } from 'react';
 
-import { useTasksItems } from '@/recoil/todo/useTaskItems';
 import { Task } from '@/type/type';
 
 import { useInput } from '../../hooks/useInput';
+import { useTasksManager } from '../../hooks/useTaskManager';
 
 import Button from './Button';
 import Checkbox from './Checkbox';
@@ -13,7 +13,7 @@ import Input from './Input';
 const TaskItem = ({ task }: { task: Task }) => {
   const { inputValue, setInputValue, handleInput } = useInput(task.title);
   // const { updateTask, toggleTaskStatus, deleteTask } = useTasksContext();
-  const { updateTask, toggleTaskStatus, deleteTask } = useTasksItems();
+  const { updateTask, toggleTaskStatus, deleteTask } = useTasksManager();
   const [titleStatus, setTitleStatus] = useState(false);
 
   const saveEdit = () => {
@@ -46,7 +46,10 @@ const TaskItem = ({ task }: { task: Task }) => {
     }
   };
   return (
-    <li key={task.id} className="flex w-full items-center gap-2">
+    <li
+      key={task.id}
+      className="flex w-full items-center gap-2 shadow-[0_-1px_0_0_inset]"
+    >
       <Checkbox
         checked={task.status === 'completed'}
         onChange={handleCheck}

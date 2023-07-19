@@ -1,10 +1,10 @@
-import { useTasksItems } from '@/recoil/todo/useTaskItems';
+import { useTasksManager } from '../../hooks/useTaskManager';
 
 import Button from './Button';
 
 const TodoFooter = () => {
   // const { deleteAllTasks } = useTasksContext();
-  const { deleteAllTasks } = useTasksItems();
+  const { deleteAllTasks } = useTasksManager();
 
   const handleClearButton = () => {
     deleteAllTasks();

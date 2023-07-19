@@ -2,14 +2,14 @@ import { KeyboardEvent } from 'react';
 
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { useTasksItems } from '@/recoil/todo/useTaskItems';
 
 import { useInput } from '../../hooks/useInput';
+import { useTasksManager } from '../../hooks/useTaskManager';
 
 const NewTask = () => {
   const { inputValue, setInputValue, handleInput } = useInput('');
   // const { tasks, deleteTask, addTask, updateTask } = useTasksContext();
-  const { tasks, deleteTask, addTask, updateTask } = useTasksItems();
+  const { tasks, deleteTask, addTask, updateTask } = useTasksManager();
 
   const addTaskItem = () => {
     addTask(inputValue);

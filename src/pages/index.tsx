@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { RecoilRoot } from 'recoil';
 
-import TodoListView from '@/components/TodoListView';
-import { TaskProvider } from '@/context/TaskContext';
+import Title from '@/components/Title';
 import { Task } from '@/type/type';
 
 export default function Home() {
@@ -22,9 +22,9 @@ export default function Home() {
 
   return (
     <>
-      <TaskProvider initialTask={initialTasks}>
-        <TodoListView />
-      </TaskProvider>
+      <RecoilRoot>
+        <Title />
+      </RecoilRoot>
     </>
   );
 }

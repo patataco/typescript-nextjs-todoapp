@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { TaskContextProps } from '@/context/TaskContext';
@@ -7,6 +8,17 @@ import { tasksState } from './atom';
 
 export const useTasksItems: () => TaskContextProps = () => {
   const [tasks, setTasks] = useRecoilState(tasksState);
+
+  useEffect(() => {
+    const tasksInStorage = localStorage.getItem('tasks');
+    console.log(tasksInStorage);
+    debugger;
+    if (tasksInStorage) {
+      const newTasks = JSON.parse(tasksInStorage);
+
+      setTasks(newTasks);
+    }
+  }, []);
 
   const addTask = (value: string) => {
     const newTask: Task = {
@@ -61,7 +73,7 @@ export const useTasksItems: () => TaskContextProps = () => {
 
   return {
     tasks,
-
+    setTasks,
     addTask,
     updateTask,
     toggleTaskStatus,

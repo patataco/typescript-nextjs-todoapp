@@ -1,6 +1,8 @@
 import {
   createContext,
+  Dispatch,
   PropsWithChildren,
+  SetStateAction,
   useContext,
   useEffect,
   useState,
@@ -14,6 +16,7 @@ export type InitialTaskProps = {
 
 export interface TaskContextProps {
   tasks: Task[];
+  setTasks: Dispatch<SetStateAction<Task[]>>;
   addTask: (value: string) => void;
   updateTask: (selectedTask: Task) => void;
   deleteTask: (selectedTask: Task) => void;
@@ -87,6 +90,7 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
     <TaskContext.Provider
       value={{
         tasks,
+        setTasks,
         addTask,
         updateTask,
         deleteTask,

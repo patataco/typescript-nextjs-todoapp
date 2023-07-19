@@ -11,6 +11,7 @@
     "test": "jest --watchAll"
   },
   "dependencies": {
+    "@ebay/nice-modal-react": "^1.2.10",
     "@testing-library/user-event": "^14.4.3",
     "@types/node": "20.3.3",
     "@types/react": "18.2.14",

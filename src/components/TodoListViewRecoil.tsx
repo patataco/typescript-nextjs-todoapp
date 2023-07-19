@@ -1,30 +1,17 @@
 import { useMemo } from 'react';
 
 import TasksList from '@/components/TasksList';
+import { useTasksItems } from '@/recoil/todo/useTaskItems';
 import { Task } from '@/type/type';
 
 import { useCheckbox } from '../../hooks/useCheckbox';
-import { useTasksManager } from '../../hooks/useTaskManager';
 
 import NewTask from './NewTask';
 import TodoFooter from './TodoFooter';
 
-const TodoListView = () => {
+const TodoListViewRecoil = () => {
   const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
-  // const { tasks, deleteTask, addTask, updateTask } = useTasksContext();
-  const { tasks, setTasks, deleteTask, addTask, updateTask } =
-    useTasksManager();
-
-  // useEffect(() => {
-  //   const tasksInStorage = localStorage.getItem('tasks');
-  //   console.log(tasksInStorage);
-  //   debugger;
-  //   if (tasksInStorage) {
-  //     const newTasks = JSON.parse(tasksInStorage);
-
-  //     setTasks(newTasks);
-  //   }
-  // }, []);
+  const { tasks, deleteTask, addTask, updateTask } = useTasksItems();
 
   const uncompletedList = useMemo(
     () => tasks.filter((task: Task) => task.status !== 'completed'),
@@ -34,7 +21,6 @@ const TodoListView = () => {
     () => tasks.filter((task: Task) => task.status === 'completed'),
     [tasks]
   );
-
   return (
     <div className="bg-blue-100">
       <div className="mx-auto flex h-screen max-w-5xl items-center justify-center ">
@@ -56,4 +42,4 @@ const TodoListView = () => {
   );
 };
 
-export default TodoListView;
+export default TodoListViewRecoil;
