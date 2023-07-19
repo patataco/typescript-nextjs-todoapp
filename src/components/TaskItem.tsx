@@ -12,7 +12,6 @@ import Input from './Input';
 
 const TaskItem = ({ task }: { task: Task }) => {
   const { inputValue, setInputValue, handleInput } = useInput(task.title);
-  // const { updateTask, toggleTaskStatus, deleteTask } = useTasksContext();
   const { updateTask, toggleTaskStatus, deleteTask } = useTasksManager();
   const [titleStatus, setTitleStatus] = useState(false);
 
@@ -37,6 +36,7 @@ const TaskItem = ({ task }: { task: Task }) => {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
+      updateTask(task);
       saveEdit();
       return;
     }

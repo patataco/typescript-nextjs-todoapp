@@ -12,19 +12,7 @@ import TodoFooter from './TodoFooter';
 const TodoListView = () => {
   const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
   // const { tasks, deleteTask, addTask, updateTask } = useTasksContext();
-  const { tasks, setTasks, deleteTask, addTask, updateTask } =
-    useTasksManager();
-
-  // useEffect(() => {
-  //   const tasksInStorage = localStorage.getItem('tasks');
-  //   console.log(tasksInStorage);
-  //   debugger;
-  //   if (tasksInStorage) {
-  //     const newTasks = JSON.parse(tasksInStorage);
-
-  //     setTasks(newTasks);
-  //   }
-  // }, []);
+  const { tasks } = useTasksManager();
 
   const uncompletedList = useMemo(
     () => tasks.filter((task: Task) => task.status !== 'completed'),

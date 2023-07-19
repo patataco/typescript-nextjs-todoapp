@@ -63,5 +63,9 @@ const MENU_LIST: Menu[] = [
     path: '/todo/v2',
     title: 'Recoil을 활용한 상태관리',
   },
+  {
+    path: '/todo/v3',
+    title: 'REST API를 활용한 Data Fetching',
+  },
 ];
 export default Drawer;

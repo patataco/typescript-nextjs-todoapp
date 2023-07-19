@@ -20,3 +20,8 @@ export const tasksState = atom<Task[]>({
   default: [],
   effects: [localStorageEffect('tasks')],
 });
+
+export const tasksServer = atom<Task[]>({
+  key: 'tasksServer',
+  default: [],
+});

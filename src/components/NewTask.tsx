@@ -8,8 +8,7 @@ import { useTasksManager } from '../../hooks/useTaskManager';
 
 const NewTask = () => {
   const { inputValue, setInputValue, handleInput } = useInput('');
-  // const { tasks, deleteTask, addTask, updateTask } = useTasksContext();
-  const { tasks, deleteTask, addTask, updateTask } = useTasksManager();
+  const { addTask } = useTasksManager();
 
   const addTaskItem = () => {
     addTask(inputValue);
