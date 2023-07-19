@@ -1,28 +1,30 @@
-import { RecoilRoot, useRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { RecoilRoot } from 'recoil';
 
 import TodoListView from '@/components/TodoListView';
 import { TaskProvider } from '@/context/TaskContext';
-import { tasksState } from '@/recoil/todo/atom';
+import { Task } from '@/type/type';
 
 export default function V2() {
-  const [tasks, setTasks] = useRecoilState(tasksState);
+  const [initialTasks, setInitialTasks] = useState<Task[] | null>(null);
+  useEffect(() => {
+    const tasksInStorage = localStorage.getItem('tasks');
 
-  // useEffect(() => {
-  //   const tasksInStorage = localStorage.getItem('tasks');
-  //   console.log(tasksInStorage);
-  //   if (tasksInStorage) {
-  //     const newTasks = JSON.parse(tasksInStorage);
-  //     console.log(newTasks);
-  //     setTasks(newTasks);
-  //   } else {
-  //     setTasks([]);
-  //   }
-  // }, []);
+    if (tasksInStorage) {
+      const newTasks = JSON.parse(tasksInStorage);
+
+      setInitialTasks(newTasks);
+    } else {
+      setInitialTasks([]);
+    }
+  }, []);
+
+  if (!initialTasks) return;
 
   return (
     <>
       <RecoilRoot>
-        <TaskProvider initialTask={tasks}>
+        <TaskProvider initialTask={initialTasks}>
           <TodoListView />
         </TaskProvider>
       </RecoilRoot>

@@ -10,13 +10,14 @@ export const useTasksItems: () => TaskContextProps = () => {
   const [tasks, setTasks] = useRecoilState(tasksState);
 
   useEffect(() => {
-    const tasksInStorage = localStorage.getItem('tasks');
-    console.log(tasksInStorage);
-    debugger;
-    if (tasksInStorage) {
-      const newTasks = JSON.parse(tasksInStorage);
+    if (typeof window !== 'undefined') {
+      const tasksInStorage = localStorage.getItem('tasks');
 
-      setTasks(newTasks);
+      if (tasksInStorage) {
+        const newTasks = JSON.parse(tasksInStorage);
+
+        setTasks(newTasks);
+      }
     }
   }, []);
 
