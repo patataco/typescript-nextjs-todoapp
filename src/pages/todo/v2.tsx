@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
-import { RecoilRoot } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import TodoListView from '@/components/TodoListView';
 import { TaskProvider } from '@/context/TaskContext';
+import { versionAtom } from '@/recoil/todo/atom';
 import { Task } from '@/type/type';
 
 export default function V2() {
   const [initialTasks, setInitialTasks] = useState<Task[] | null>(null);
+  const setVersionType = useSetRecoilState(versionAtom);
   useEffect(() => {
     const tasksInStorage = localStorage.getItem('tasks');
-
+    setVersionType('recoil');
     if (tasksInStorage) {
       const newTasks = JSON.parse(tasksInStorage);
-
       setInitialTasks(newTasks);
     } else {
       setInitialTasks([]);
@@ -23,11 +24,9 @@ export default function V2() {
 
   return (
     <>
-      <RecoilRoot>
-        <TaskProvider initialTask={initialTasks}>
-          <TodoListView />
-        </TaskProvider>
-      </RecoilRoot>
+      <TaskProvider initialTask={initialTasks}>
+        <TodoListView />
+      </TaskProvider>
     </>
   );
 }

@@ -1,27 +1,16 @@
-import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
+import { addTasks, NewTask } from '@/api/addTasks';
+import { deleteTasks } from '@/api/deleteTasks';
+import { getTasks } from '@/api/getTasks';
+import { updateTasks } from '@/api/updateTasks';
 import { TaskContextProps } from '@/context/TaskContext';
-import { addTasks, NewTask } from '@/pages/api/addTasks';
-import { deleteTasks } from '@/pages/api/deleteTasks';
-import { getTasks } from '@/pages/api/getTasks';
-import { updateTasks } from '@/pages/api/updateTasks';
 import { Task } from '@/type/type';
 
 import { tasksServer } from './atom';
 
 export const useTasksServer: () => TaskContextProps = () => {
   const [tasks, setTasks] = useRecoilState(tasksServer);
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const fetchData = async () => {
-        const data = await getTasks();
-        setTasks(data);
-      };
-
-      fetchData();
-    }
-  }, []);
 
   const addTask = async (value: string) => {
     const newTask: NewTask = {

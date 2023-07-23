@@ -11,9 +11,9 @@ import TodoFooter from './TodoFooter';
 
 const TodoListView = () => {
   const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
-  // const { tasks, deleteTask, addTask, updateTask } = useTasksContext();
-  const { tasks } = useTasksManager();
 
+  const { tasks } = useTasksManager();
+  console.log(useTasksManager());
   const uncompletedList = useMemo(
     () => tasks.filter((task: Task) => task.status !== 'completed'),
     [tasks]
@@ -25,9 +25,9 @@ const TodoListView = () => {
 
   return (
     <div className="bg-blue-100">
-      <div className="mx-auto flex h-screen max-w-5xl items-center justify-center ">
+      <div className="flex items-center justify-center h-screen max-w-5xl mx-auto ">
         <div className="h-[800px] w-[600px]  bg-gray-50 ">
-          <div className="flex h-full flex-col items-center gap-6 px-10 py-9">
+          <div className="flex flex-col items-center h-full gap-6 px-10 py-9">
             <h1>To-do List</h1>
             <NewTask />
 

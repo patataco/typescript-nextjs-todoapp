@@ -7,7 +7,9 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useRecoilValue } from 'recoil';
 
+import { versionAtom } from '@/recoil/todo/atom';
 import { Task } from '@/type/type';
 
 export type InitialTaskProps = {
@@ -31,9 +33,11 @@ export type TaskProviderProps = PropsWithChildren<InitialTaskProps>;
 
 export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   const [tasks, setTasks] = useState<Task[]>(initialTask);
+  const versionType = useRecoilValue(versionAtom);
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    if (versionType === 'context')
+      localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
   const addTask = (value: string) => {

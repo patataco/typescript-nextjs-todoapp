@@ -25,3 +25,10 @@ export const tasksServer = atom<Task[]>({
   key: 'tasksServer',
   default: [],
 });
+
+export type VersionType = 'context' | 'recoil' | 'server';
+
+export const versionAtom = atom<VersionType>({
+  key: 'versionType',
+  default: 'context',
+});
