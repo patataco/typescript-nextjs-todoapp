@@ -4,11 +4,9 @@ import { useSetRecoilState } from 'recoil';
 import TodoListView from '@/components/TodoListView';
 import { TaskProvider } from '@/context/TaskContext';
 import { tasksServer, versionAtom } from '@/recoil/todo/atom';
-import { useTasks } from '@/service/useTasks';
 import { Task } from '@/type/type';
 
 export default function V3() {
-  const { data, isLoading } = useTasks();
   const setVersionType = useSetRecoilState(versionAtom);
   const [initialTasks, setInitialTasks] = useState<Task[] | null>([]);
   const setTasks = useSetRecoilState(tasksServer);

@@ -1,5 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
-
 import { NewTask } from '@/api/addTasks';
 import {
   useAddTasks,
@@ -10,12 +8,12 @@ import { useTasks } from '@/service/useTasks';
 import { Task } from '@/type/type';
 
 export const useTasksQuery = () => {
-  const queryClient = useQueryClient();
   const updateMutation = useUpdateTasks();
   const deleteMutation = useDeleteTasks();
   const addMutation = useAddTasks();
 
   const { data: tasks } = useTasks();
+
   const updateTask = async ({ id, ...rest }: Task) => {
     try {
       await updateMutation.mutateAsync({ id, ...rest });
@@ -46,7 +44,8 @@ export const useTasksQuery = () => {
   };
 
   const toggleTaskStatus = async (selectedTask: Task) => {
-    const changedTask = tasks?.find((task) => task.id === selectedTask.id);
+    if (!tasks) throw new Error('tasks is null');
+    const changedTask = tasks.find((task) => task.id === selectedTask.id);
     try {
       if (changedTask) {
         const newStatus: Task['status'] =

@@ -7,7 +7,7 @@ import NewTask from './NewTask';
 import TodoFooter from './TodoFooter';
 
 const TodoListView = () => {
-  const { tasks, isLoading } = useTasksQuery();
+  const { tasks } = useTasksQuery();
 
   if (!tasks) return;
 
