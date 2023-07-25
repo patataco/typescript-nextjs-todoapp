@@ -4,7 +4,7 @@ import { KeyboardEvent } from 'react';
 import { Task } from '@/type/type';
 
 import { useInput } from '../../hooks/useInput';
-import { useTasksManager } from '../../hooks/useTaskManager';
+import { useTasksQuery } from '../../hooks/useTasksQuery';
 
 import Button from './Button';
 import Checkbox from './Checkbox';
@@ -12,7 +12,7 @@ import Input from './Input';
 
 const TaskItem = ({ task }: { task: Task }) => {
   const { inputValue, setInputValue, handleInput } = useInput(task.title);
-  const { updateTask, toggleTaskStatus, deleteTask } = useTasksManager();
+  const { updateTask, toggleTaskStatus, deleteTask } = useTasksQuery();
   const [titleStatus, setTitleStatus] = useState(false);
 
   const saveEdit = () => {
@@ -31,7 +31,7 @@ const TaskItem = ({ task }: { task: Task }) => {
     saveEdit();
   };
   const handleDeleteButtonClick = () => {
-    deleteTask(task);
+    deleteTask(task.id);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {

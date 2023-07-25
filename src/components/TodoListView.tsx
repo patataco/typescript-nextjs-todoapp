@@ -1,28 +1,23 @@
-import { useMemo } from 'react';
-
 import TasksList from '@/components/TasksList';
 import { Task } from '@/type/type';
 
-import { useCheckbox } from '../../hooks/useCheckbox';
-import { useTasksManager } from '../../hooks/useTaskManager';
+import { useTasksQuery } from '../../hooks/useTasksQuery';
 
 import NewTask from './NewTask';
 import TodoFooter from './TodoFooter';
 
 const TodoListView = () => {
-  const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
+  const { tasks, isLoading } = useTasksQuery();
 
-  const { tasks } = useTasksManager();
-  console.log(useTasksManager());
-  const uncompletedList = useMemo(
-    () => tasks.filter((task: Task) => task.status !== 'completed'),
-    [tasks]
-  );
-  const completedList = useMemo(
-    () => tasks.filter((task: Task) => task.status === 'completed'),
-    [tasks]
+  if (!tasks) return;
+
+  const uncompletedList = tasks.filter(
+    (task: Task) => task.status !== 'completed'
   );
 
+  const completedList = tasks.filter(
+    (task: Task) => task.status === 'completed'
+  );
   return (
     <div className="bg-blue-100">
       <div className="mx-auto flex h-screen max-w-5xl items-center justify-center ">

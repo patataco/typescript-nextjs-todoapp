@@ -1,27 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 import TodoListView from '@/components/TodoListView';
 import { TaskProvider } from '@/context/TaskContext';
 import { tasksServer, versionAtom } from '@/recoil/todo/atom';
-import { useTasks } from '@/service/useTasks';
 import { Task } from '@/type/type';
 
-export default function V3() {
-  const { data, isLoading } = useTasks();
+export default function V4() {
   const setVersionType = useSetRecoilState(versionAtom);
   const [initialTasks, setInitialTasks] = useState<Task[] | null>([]);
   const setTasks = useSetRecoilState(tasksServer);
 
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   const data = await getTasks();
-    //   setInitialTasks(data);
-    //   setTasks(data);
-    // };
-    setVersionType('server');
-    // fetchData();
-  }, [setVersionType]);
+  // useEffect(() => {
+  //   // const fetchData = async () => {
+  //   //   const data = await getTasks();
+  //   //   setInitialTasks(data);
+  //   //   setTasks(data);
+  //   // };
+  //   // setVersionType('server');
+  //   // fetchData();
+  // }, [setVersionType]);
 
   if (!initialTasks) return;
 

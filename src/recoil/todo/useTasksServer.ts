@@ -29,20 +29,21 @@ export const useTasksServer: () => TaskContextProps = () => {
     setTasks(data);
   };
 
-  const toggleTaskStatus = (selectedTask: Task) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === selectedTask.id) {
-        const newStatus: Task['status'] =
-          task.status === 'completed' ? 'inProgress' : 'completed';
-        return {
-          ...task,
-          status: newStatus,
-        };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
+  const toggleTaskStatus = async (selectedTask: Task) => {
+    const changedTask = tasks.find((task) => task.id === selectedTask.id);
+    if (changedTask) {
+      const newStatus: Task['status'] =
+        changedTask.status === 'completed' ? 'inProgress' : 'completed';
+      const changedItem = {
+        ...changedTask,
+        status: newStatus,
+      };
+      await updateTasks(changedItem);
+    }
+    const data = await getTasks();
+    setTasks(data);
   };
+
   const deleteTask = async (selectedTask: Task) => {
     const { id, ...rest } = selectedTask;
     await deleteTasks(id);

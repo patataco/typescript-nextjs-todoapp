@@ -4,11 +4,11 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 
 import { useInput } from '../../hooks/useInput';
-import { useTasksManager } from '../../hooks/useTaskManager';
+import { useTasksQuery } from '../../hooks/useTasksQuery';
 
 const NewTask = () => {
   const { inputValue, setInputValue, handleInput } = useInput('');
-  const { addTask } = useTasksManager();
+  const { addTask } = useTasksQuery();
 
   const addTaskItem = () => {
     addTask(inputValue);
