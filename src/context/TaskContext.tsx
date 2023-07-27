@@ -21,7 +21,7 @@ export interface TaskContextProps {
   setTasks: Dispatch<SetStateAction<Task[]>>;
   addTask: (value: string) => void;
   updateTask: (selectedTask: Task) => void;
-  deleteTask: (selectedTask: Task) => void;
+  deleteTask: (id: string) => void;
   toggleTaskStatus: (selectedTask: Task) => void;
   deleteAllTasks: () => void;
 }
@@ -80,8 +80,8 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
     });
     setTasks(updatedTasks);
   };
-  const deleteTask = (selectedTask: Task) => {
-    const updatedTask = tasks.filter((task) => task !== selectedTask);
+  const deleteTask = (id: string) => {
+    const updatedTask = tasks.filter((task) => task.id !== id);
     setTasks(updatedTask);
   };
 

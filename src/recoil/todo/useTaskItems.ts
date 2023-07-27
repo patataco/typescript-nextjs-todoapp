@@ -61,8 +61,8 @@ export const useTasksItems: () => TaskContextProps = () => {
     });
     setTasks(updatedTasks);
   };
-  const deleteTask = (selectedTask: Task) => {
-    const updatedTask = tasks.filter((task) => task !== selectedTask);
+  const deleteTask = (id: string) => {
+    const updatedTask = tasks.filter((task) => task.id !== id);
     setTasks(updatedTask);
   };
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
+import Layout from '@/components/Layout';
 import TodoListView from '@/components/TodoListView';
 import { TaskProvider } from '@/context/TaskContext';
 import { versionAtom } from '@/recoil/todo/atom';
@@ -31,3 +32,7 @@ export default function V1() {
     </>
   );
 }
+
+V1.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
+};

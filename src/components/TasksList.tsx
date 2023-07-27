@@ -17,7 +17,7 @@ const TasksList = ({ tasks, ...props }: TaskListProps) => {
           return <TaskItem key={task.id} task={task} />;
         })
       ) : (
-        <p>Empty</p>
+        <p className="hidden">Empty</p>
       )}
     </ul>
   );

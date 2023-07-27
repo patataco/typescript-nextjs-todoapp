@@ -1,13 +1,14 @@
-import { RecoilRoot } from 'recoil';
-
+import Layout from '@/components/Layout';
 import Title from '@/components/Title';
 
 export default function Home() {
   return (
     <>
-      <RecoilRoot>
-        <Title />
-      </RecoilRoot>
+      <Title />
     </>
   );
 }
+
+Home.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
+};

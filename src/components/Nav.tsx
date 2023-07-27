@@ -5,7 +5,7 @@ import { NavProps } from '@/type/type';
 const Nav = ({ onClick }: NavProps) => {
   return (
     <div className="h-12 bg-slate-100">
-      <div className="mx-auto flex h-12 max-w-[1120px] items-center justify-between px-4">
+      <div className="mx-auto flex h-12 items-center justify-between px-4">
         <div>
           <button className="appearance-none border-none" onClick={onClick}>
             <Image alt="menu" src="/menusvg.svg" width={16} height={16} />

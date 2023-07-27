@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
+import { getTasks } from '@/api/getTasks';
+import Layout from '@/components/Layout';
 import TodoListView from '@/components/TodoListView';
 import { TaskProvider } from '@/context/TaskContext';
 import { tasksServer, versionAtom } from '@/recoil/todo/atom';
@@ -12,14 +14,14 @@ export default function V3() {
   const setTasks = useSetRecoilState(tasksServer);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const data = await getTasks();
-    //   setInitialTasks(data);
-    //   setTasks(data);
-    // };
+    const fetchData = async () => {
+      const { data } = await getTasks();
+      setInitialTasks(data);
+      setTasks(data);
+    };
     setVersionType('server');
-    // fetchData();
-  }, [setVersionType]);
+    fetchData();
+  }, [setVersionType, setTasks]);
 
   if (!initialTasks) return;
 
@@ -31,3 +33,7 @@ export default function V3() {
     </>
   );
 }
+
+V3.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
+};
