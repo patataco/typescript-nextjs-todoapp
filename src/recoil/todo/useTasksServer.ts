@@ -19,13 +19,13 @@ export const useTasksServer: () => TaskContextProps = () => {
     };
 
     await addTasks(newTask);
-    const { data } = await getTasks();
+    const data = await getTasks();
     setTasks(data);
   };
 
   const updateTask = async (selectedTask: Task) => {
     await updateTasks(selectedTask);
-    const { data } = await getTasks();
+    const data = await getTasks();
     setTasks(data);
   };
 
@@ -40,14 +40,14 @@ export const useTasksServer: () => TaskContextProps = () => {
       };
       await updateTasks(changedItem);
     }
-    const { data } = await getTasks();
+    const data = await getTasks();
     setTasks(data);
   };
 
   const deleteTask = async (id: string) => {
     console.log(id);
     await deleteTasks(id);
-    const { data } = await getTasks();
+    const data = await getTasks();
     setTasks(data);
   };
 

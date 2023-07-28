@@ -15,7 +15,7 @@ export default function V3() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await getTasks();
+      const data = await getTasks();
       setInitialTasks(data);
       setTasks(data);
     };
