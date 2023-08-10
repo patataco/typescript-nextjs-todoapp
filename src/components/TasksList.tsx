@@ -14,7 +14,7 @@ const TasksList = ({ tasks, ...props }: TaskListProps) => {
     <ul className="w-full" {...props}>
       {tasks.length > 0 ? (
         tasks.map((task) => {
-          return <TaskItem key={task.id} task={task} />;
+          return <TaskItem key={task.clientId} task={task} />;
         })
       ) : (
         <p className="hidden">Empty</p>

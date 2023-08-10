@@ -15,7 +15,7 @@ export default function V3() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getTasks();
+      const { data } = await getTasks();
       setInitialTasks(data);
       setTasks(data);
     };
@@ -28,6 +28,7 @@ export default function V3() {
   return (
     <>
       <TaskProvider initialTask={initialTasks}>
+        <h1>REST API</h1>
         <TodoListView />
       </TaskProvider>
     </>

@@ -26,6 +26,7 @@ export default function V2() {
   return (
     <>
       <TaskProvider initialTask={initialTasks}>
+        <h1>Recoil</h1>
         <TodoListView />
       </TaskProvider>
     </>

@@ -1,6 +1,7 @@
 import { useRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 
-import { addTasks, NewTask } from '@/api/addTasks';
+import { addTasks } from '@/api/addTasks';
 import { deleteTasks } from '@/api/deleteTasks';
 import { getTasks } from '@/api/getTasks';
 import { updateTasks } from '@/api/updateTasks';
@@ -13,19 +14,26 @@ export const useTasksServer: () => TaskContextProps = () => {
   const [tasks, setTasks] = useRecoilState(tasksServer);
 
   const addTask = async (value: string) => {
-    const newTask: NewTask = {
+    const newTask: Task = {
+      clientId: uuidv4(),
       title: value,
       content: value,
+      status: 'inProgress',
+      startDateTime: new Date(),
+      dueDateTime: null,
+      createdDateTime: new Date(),
+      lastModifiedDateTime: new Date(),
+      id: null,
     };
 
     await addTasks(newTask);
-    const data = await getTasks();
+    const { data } = await getTasks();
     setTasks(data);
   };
 
   const updateTask = async (selectedTask: Task) => {
     await updateTasks(selectedTask);
-    const data = await getTasks();
+    const { data } = await getTasks();
     setTasks(data);
   };
 
@@ -40,14 +48,13 @@ export const useTasksServer: () => TaskContextProps = () => {
       };
       await updateTasks(changedItem);
     }
-    const data = await getTasks();
+    const { data } = await getTasks();
     setTasks(data);
   };
 
-  const deleteTask = async (id: string) => {
-    console.log(id);
-    await deleteTasks(id);
-    const data = await getTasks();
+  const deleteTask = async (task: Task) => {
+    await deleteTasks(task);
+    const { data } = await getTasks();
     setTasks(data);
   };
 

@@ -31,12 +31,13 @@ const TaskItem = ({ task }: { task: Task }) => {
     saveEdit();
   };
   const handleDeleteButtonClick = () => {
-    deleteTask(task.id);
+    deleteTask(task);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
-      updateTask(task);
+      const updatedTask = { ...task, title: inputValue };
+      updateTask(updatedTask);
       saveEdit();
       return;
     }
@@ -89,6 +90,8 @@ const TaskItem = ({ task }: { task: Task }) => {
       >
         ✖️
       </Button>
+      <div className="w-[80px] truncate text-sm">{`clientId: ${task.clientId}`}</div>
+      <div className="w-[80px] truncate text-sm">{`serverId: ${task.id}`}</div>
     </li>
   );
 };

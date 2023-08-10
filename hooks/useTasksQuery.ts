@@ -1,4 +1,5 @@
-import { NewTask } from '@/api/addTasks';
+import { v4 as uuidv4 } from 'uuid';
+
 import {
   useAddTasks,
   useDeleteTasks,
@@ -22,18 +23,25 @@ export const useTasksQuery = () => {
     }
   };
 
-  const deleteTask = async (id: string) => {
+  const deleteTask = async (task: Task) => {
     try {
-      await deleteMutation.mutateAsync(id);
+      await deleteMutation.mutateAsync(task);
     } catch (e) {
       console.log(e);
     }
   };
 
   const addTask = async (value: string) => {
-    const newTask: NewTask = {
+    const newTask: Task = {
+      clientId: uuidv4(),
       title: value,
       content: value,
+      status: 'inProgress',
+      startDateTime: new Date(),
+      dueDateTime: null,
+      createdDateTime: new Date(),
+      lastModifiedDateTime: new Date(),
+      id: null,
     };
 
     try {
@@ -45,7 +53,9 @@ export const useTasksQuery = () => {
 
   const toggleTaskStatus = async (selectedTask: Task) => {
     if (!tasks) throw new Error('tasks is null');
-    const changedTask = tasks.find((task) => task.id === selectedTask.id);
+    const changedTask = tasks.find(
+      (task) => task.clientId === selectedTask.clientId
+    );
     try {
       if (changedTask) {
         const newStatus: Task['status'] =

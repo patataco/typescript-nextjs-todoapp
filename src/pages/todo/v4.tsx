@@ -9,7 +9,7 @@ import { Task } from '@/type/type';
 
 export default function V4() {
   const setVersionType = useSetRecoilState(versionAtom);
-  const [initialTasks, setInitialTasks] = useState<Task[] | null>([]);
+  const [initialTasks] = useState<Task[] | null>([]);
 
   useEffect(() => {
     setVersionType('query');
@@ -20,6 +20,7 @@ export default function V4() {
   return (
     <>
       <TaskProvider initialTask={initialTasks}>
+        <h1>React Query Optimistic Updates</h1>
         <TodoListView />
       </TaskProvider>
     </>

@@ -23,7 +23,7 @@ export const useTasksItems: () => TaskContextProps = () => {
 
   const addTask = (value: string) => {
     const newTask: Task = {
-      id: new Date().getTime().toString(36),
+      clientId: new Date().getTime().toString(36),
       title: value,
       content: '',
       categories: [],
@@ -32,12 +32,14 @@ export const useTasksItems: () => TaskContextProps = () => {
       dueDateTime: null,
       createdDateTime: new Date(),
       lastModifiedDateTime: new Date(),
+      id: '',
     };
 
     setTasks((prev) => [...prev, newTask]);
   };
 
   const updateTask = (selectedTask: Task) => {
+    console.log(selectedTask);
     const updatedTasks = tasks.map((task) => {
       if (task.id === selectedTask.id) {
         return { ...task, ...selectedTask };
@@ -61,8 +63,8 @@ export const useTasksItems: () => TaskContextProps = () => {
     });
     setTasks(updatedTasks);
   };
-  const deleteTask = (id: string) => {
-    const updatedTask = tasks.filter((task) => task.id !== id);
+  const deleteTask = (selectedTask: Task) => {
+    const updatedTask = tasks.filter((task) => task !== selectedTask);
     setTasks(updatedTask);
   };
 

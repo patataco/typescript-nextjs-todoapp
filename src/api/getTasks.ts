@@ -1,7 +1,9 @@
+import { AxiosPromise } from 'axios';
+
 import { Task } from '@/type/type';
 import { apiClient } from '@/utils/axios';
 
-const KEY_CHANGE_GET: Record<string, string> = {
+export const KEY_CHANGE_GET: Record<string, string> = {
   id: 'id',
   title: 'title',
   content: 'content',
@@ -11,20 +13,9 @@ const KEY_CHANGE_GET: Record<string, string> = {
   updated_at: 'lastModifiedDateTime',
   status: 'status',
   categories: 'categories',
+  client_id: 'clientId',
 };
 
-const convertKey = (tasks: Task[]) => {
-  return tasks.map((task) => {
-    return Object.keys(task).reduce((newTask: any, key: string) => {
-      const newKey = KEY_CHANGE_GET[key];
-      newTask[newKey] = task[key as keyof Task];
-      return newTask;
-    }, {});
-  });
-};
-export const getTasks = async () => {
-  const response = await apiClient.get<Task[]>('/v1/todos_2');
-
-  const data = convertKey(response.data);
-  return data;
+export const getTasks: () => AxiosPromise<Task[]> = async () => {
+  return await apiClient.get<Task[]>('/v1/todos_2');
 };
