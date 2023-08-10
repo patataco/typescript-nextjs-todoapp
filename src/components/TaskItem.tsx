@@ -90,8 +90,8 @@ const TaskItem = ({ task }: { task: Task }) => {
       >
         ✖️
       </Button>
-      <div className="w-[80px] truncate text-sm">{`clientId: ${task.clientId}`}</div>
-      <div className="w-[80px] truncate text-sm">{`serverId: ${task.id}`}</div>
+      {/* <div className="w-[80px] truncate text-sm">{`clientId: ${task.clientId}`}</div>
+      <div className="w-[80px] truncate text-sm">{`serverId: ${task.id}`}</div> */}
     </li>
   );
 };
