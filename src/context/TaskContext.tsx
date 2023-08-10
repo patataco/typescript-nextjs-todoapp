@@ -1,12 +1,24 @@
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { useRecoilValue } from 'recoil';
+
+import { versionAtom } from '@/recoil/todo/atom';
 import { Task } from '@/type/type';
 
-type InitialTaskProps = {
+export type InitialTaskProps = {
   initialTask: Task[];
 };
 
-interface TaskContextProps {
-  tasks: Task[];
+export interface TaskContextProps {
+  tasks: Task[] | undefined;
+  setTasks: Dispatch<SetStateAction<Task[]>>;
   addTask: (value: string) => void;
   updateTask: (selectedTask: Task) => void;
   deleteTask: (selectedTask: Task) => void;
@@ -21,14 +33,16 @@ export type TaskProviderProps = PropsWithChildren<InitialTaskProps>;
 
 export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   const [tasks, setTasks] = useState<Task[]>(initialTask);
+  const versionType = useRecoilValue(versionAtom);
 
-  // const updateStorage = () => {
-  //   localStorage.setItem('tasks', JSON.stringify(tasks));
-  // };
+  useEffect(() => {
+    if (versionType === 'context')
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (value: string) => {
     const newTask: Task = {
-      id: new Date().getTime().toString(36),
+      clientId: new Date().getTime().toString(36),
       title: value,
       content: '',
       categories: [],
@@ -37,9 +51,9 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
       dueDateTime: null,
       createdDateTime: new Date(),
       lastModifiedDateTime: new Date(),
+      id: '',
     };
-    // const updatedTasks = [...tasks, newTask];
-    // localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
     setTasks((prev) => [...prev, newTask]);
   };
 
@@ -73,15 +87,15 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   };
 
   const deleteAllTasks = () => {
-    console.log(tasks);
     const updatedTask = tasks.filter((task) => task.status !== 'completed');
-    console.log(updatedTask);
+
     setTasks(updatedTask);
   };
   return (
     <TaskContext.Provider
       value={{
         tasks,
+        setTasks,
         addTask,
         updateTask,
         deleteTask,
@@ -94,7 +108,7 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   );
 };
 
-export const useTasks = () => {
+export const useTasksContext = () => {
   const context = useContext(TaskContext);
   if (!context) {
     throw new Error('Cannot find TodoProvider');

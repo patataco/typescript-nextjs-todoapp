@@ -6,7 +6,7 @@ export type TaskStatus =
   | 'deferred';
 
 export interface Task {
-  id: string;
+  id: string | null;
   title: string;
   content: string | null;
   categories?: string[];
@@ -15,4 +15,15 @@ export interface Task {
   dueDateTime: Date | null;
   createdDateTime: Date;
   lastModifiedDateTime: Date;
+  clientId: string;
 }
+
+export interface DrawerProps {
+  isOpen: boolean;
+}
+
+export interface NavProps {
+  onClick: () => void;
+}
+
+export type TaskWithoutId = Omit<Task, 'id'>;

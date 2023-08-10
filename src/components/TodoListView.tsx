@@ -1,37 +1,42 @@
 import TasksList from '@/components/TasksList';
 import { Task } from '@/type/type';
-import { useCheckbox } from '../../hooks/useCheckbox';
 
-import { TaskProvider, useTasks } from '@/context/TaskContext';
+import { useTasksManager } from '../../hooks/useTaskManager';
+
 import NewTask from './NewTask';
 import TodoFooter from './TodoFooter';
-import { useEffect } from 'react';
 
 const TodoListView = () => {
-  const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
-  const { tasks, deleteTask, addTask, updateTask } = useTasks();
+  const { tasks } = useTasksManager();
 
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+  if (!tasks) return;
 
+  const uncompletedList = tasks.filter(
+    (task: Task) => task.status !== 'completed'
+  );
+
+  const completedList = tasks.filter(
+    (task: Task) => task.status === 'completed'
+  );
   return (
-    <div className="flex items-center justify-center h-screen max-w-5xl mx-auto bg-blue-100 ">
-      <div className="h-[800px] w-[600px]  bg-gray-50 ">
-        <div className="flex flex-col items-center h-full gap-6 px-10 py-9">
-          <h1>To-do List</h1>
-          <NewTask />
-          <h2>Tasks</h2>
-          <TasksList
-            data-testId="inProgress-section"
-            tasks={tasks.filter((task) => task.status !== 'completed')}
-          />
-          <h2>Tasks Done</h2>
-          <TasksList
-            data-testId="completed-section"
-            tasks={tasks.filter((task) => task.status === 'completed')}
-          />
-          <TodoFooter />
+    <div className="flex h-full items-center justify-center bg-blue-100">
+      <div className="mx-auto flex max-w-5xl items-center justify-center ">
+        <div className="h-[800px] w-[600px]  bg-gray-50 ">
+          <div className="flex flex-col items-center gap-6 px-10 py-9">
+            <h1 className="text-blue-950">ToDo List</h1>
+            <NewTask />
+            <div className="flex w-full flex-col">
+              <TasksList
+                data-testid="inProgress-section"
+                tasks={uncompletedList}
+              />
+              <TasksList
+                data-testid="completed-section"
+                tasks={completedList}
+              />
+            </div>
+            <TodoFooter />
+          </div>
         </div>
       </div>
     </div>

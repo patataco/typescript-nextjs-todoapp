@@ -1,13 +1,14 @@
+import { KeyboardEvent } from 'react';
+
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 
 import { useInput } from '../../hooks/useInput';
-import { useTasks } from '@/context/TaskContext';
-import { KeyboardEvent } from 'react';
+import { useTasksManager } from '../../hooks/useTaskManager';
 
 const NewTask = () => {
   const { inputValue, setInputValue, handleInput } = useInput('');
-  const { tasks, deleteTask, addTask, updateTask } = useTasks();
+  const { addTask } = useTasksManager();
 
   const addTaskItem = () => {
     addTask(inputValue);
@@ -29,18 +30,18 @@ const NewTask = () => {
   };
 
   return (
-    <div className="flex w-full gap-6">
+    <div className="flex w-full items-center gap-6">
       <Input
         placeholder="todo"
         value={inputValue}
         onChange={handleInput}
         onKeyDown={handleKeyDown}
-        className="flex-1 border-none outline-none h-9"
+        className="h-9 flex-1 border-none shadow-[0_3px_3px_-3px_rgba(0,0,0,0.3)] outline-none"
       />
       <Button
         disabled={inputValue.length < 1}
         onClick={handleAddButtonClick}
-        className="w-8 h-8 text-xl bg-slate-400"
+        className="flex h-6 w-6 items-center justify-center bg-slate-400 text-xl"
       >
         +
       </Button>

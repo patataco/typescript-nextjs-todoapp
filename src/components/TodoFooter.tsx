@@ -1,8 +1,10 @@
-import { useTasks } from '@/context/TaskContext';
+import { useTasksManager } from '../../hooks/useTaskManager';
+
 import Button from './Button';
 
 const TodoFooter = () => {
-  const { deleteAllTasks } = useTasks();
+  const { deleteAllTasks } = useTasksManager();
+
   const handleClearButton = () => {
     deleteAllTasks();
   };

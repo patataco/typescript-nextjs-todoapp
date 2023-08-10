@@ -1,23 +1,23 @@
-import { useCheckbox } from '../../hooks/useCheckbox';
-import { Task } from '@/type/type';
-import Button from './Button';
-import Checkbox from './Checkbox';
-import Input from './Input';
-import TaskItem from './TaskItem';
 import { HTMLAttributes } from 'react';
+
+import { Task } from '@/type/type';
+
+import { useCheckbox } from '../../hooks/useCheckbox';
+
+import TaskItem from './TaskItem';
 
 type TaskListProps = HTMLAttributes<HTMLUListElement> & { tasks: Task[] };
 const TasksList = ({ tasks, ...props }: TaskListProps) => {
   const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
 
   return (
-    <ul {...props}>
+    <ul className="w-full" {...props}>
       {tasks.length > 0 ? (
         tasks.map((task) => {
-          return <TaskItem key={task.id} task={task} />;
+          return <TaskItem key={task.clientId} task={task} />;
         })
       ) : (
-        <p>Empty</p>
+        <p className="hidden">Empty</p>
       )}
     </ul>
   );
