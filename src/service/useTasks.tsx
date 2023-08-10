@@ -6,8 +6,12 @@ import { Task } from '@/type/type';
 export const QUERY_KEY_TASKS = 'QUERY_KEY_TASKS';
 
 const fetchTasks = async () => {
-  const response = await getTasks();
-  return response.data;
+  try {
+    const response = await getTasks();
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const useTasks = () => {

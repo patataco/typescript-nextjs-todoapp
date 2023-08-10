@@ -3,7 +3,6 @@ import { useTasksManager } from '../../hooks/useTaskManager';
 import Button from './Button';
 
 const TodoFooter = () => {
-  // const { deleteAllTasks } = useTasksContext();
   const { deleteAllTasks } = useTasksManager();
 
   const handleClearButton = () => {

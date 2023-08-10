@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { TaskContextProps } from '@/context/TaskContext';
 import {
   useAddTasks,
   useDeleteTasks,
@@ -8,7 +9,7 @@ import {
 import { useTasks } from '@/service/useTasks';
 import { Task } from '@/type/type';
 
-export const useTasksQuery = () => {
+export const useTasksQuery: () => Omit<TaskContextProps, 'setTasks'> = () => {
   const updateMutation = useUpdateTasks();
   const deleteMutation = useDeleteTasks();
   const addMutation = useAddTasks();
@@ -31,6 +32,19 @@ export const useTasksQuery = () => {
     }
   };
 
+  const deleteAllTasks = async () => {
+    if (!tasks) throw new Error('No tasks have founded');
+    const tasksToBeDeleted = tasks?.filter(
+      (task) => task.status === 'completed'
+    );
+    try {
+      await tasksToBeDeleted.map((task) => {
+        deleteTask(task);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const addTask = async (value: string) => {
     const newTask: Task = {
       clientId: uuidv4(),
@@ -71,5 +85,12 @@ export const useTasksQuery = () => {
     }
   };
 
-  return { tasks, updateTask, deleteTask, addTask, toggleTaskStatus };
+  return {
+    tasks,
+    updateTask,
+    deleteTask,
+    addTask,
+    toggleTaskStatus,
+    deleteAllTasks,
+  };
 };

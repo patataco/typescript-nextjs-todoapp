@@ -58,10 +58,14 @@ export const useTasksServer: () => TaskContextProps = () => {
     setTasks(data);
   };
 
-  const deleteAllTasks = () => {
-    const updatedTask = tasks.filter((task) => task.status !== 'completed');
-
-    setTasks(updatedTask);
+  const deleteAllTasks = async () => {
+    const taskTobeDeleted = tasks.filter((task) => task.status === 'completed');
+    await taskTobeDeleted.map((task) => {
+      debugger;
+      deleteTasks(task);
+    });
+    const { data } = await getTasks();
+    setTasks(data);
   };
 
   return {

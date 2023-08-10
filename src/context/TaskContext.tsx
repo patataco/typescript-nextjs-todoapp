@@ -17,7 +17,7 @@ export type InitialTaskProps = {
 };
 
 export interface TaskContextProps {
-  tasks: Task[];
+  tasks: Task[] | undefined;
   setTasks: Dispatch<SetStateAction<Task[]>>;
   addTask: (value: string) => void;
   updateTask: (selectedTask: Task) => void;
