@@ -38,9 +38,7 @@ export const useTasksServer: () => TaskContextProps = () => {
   };
 
   const toggleTaskStatus = async (selectedTask: Task) => {
-    console.log('아이디', selectedTask);
     const changedTask = tasks.find((task) => task.id === selectedTask.id);
-    console.log('changedTask', changedTask);
     if (changedTask) {
       const newStatus: Task['status'] =
         changedTask.status === 'completed' ? 'inProgress' : 'completed';

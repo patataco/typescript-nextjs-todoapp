@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import TasksList from '@/components/TasksList';
 import { Task } from '@/type/type';
 
@@ -9,13 +11,23 @@ import TodoFooter from './TodoFooter';
 const TodoListView = () => {
   const { tasks } = useTasksManager();
 
+  const sortedTasks = useMemo(() => {
+    if (!tasks) return [];
+    const sorted = [...tasks].sort((a, z) => {
+      if (a.title > z.title) return 1;
+      if (a.title < z.title) return -1;
+      return 0;
+    });
+    return sorted;
+  }, [tasks]);
+
   if (!tasks) return;
 
-  const uncompletedList = tasks.filter(
+  const uncompletedList = sortedTasks.filter(
     (task: Task) => task.status !== 'completed'
   );
 
-  const completedList = tasks.filter(
+  const completedList = sortedTasks.filter(
     (task: Task) => task.status === 'completed'
   );
   return (

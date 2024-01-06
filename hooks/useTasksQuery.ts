@@ -4,14 +4,15 @@ import { TaskContextProps } from '@/context/TaskContext';
 import {
   useAddTasks,
   useDeleteTasks,
+  useStatusUpdateTasks,
   useUpdateTasks,
 } from '@/service/mutation/useMutateTasks';
 import { useTasks } from '@/service/useTasks';
 import { Task } from '@/type/type';
-import { promise } from 'zod'
 
 export const useTasksQuery: () => Omit<TaskContextProps, 'setTasks'> = () => {
   const updateMutation = useUpdateTasks();
+  const statusMutation = useStatusUpdateTasks();
   const deleteMutation = useDeleteTasks();
   const addMutation = useAddTasks();
 
@@ -39,9 +40,11 @@ export const useTasksQuery: () => Omit<TaskContextProps, 'setTasks'> = () => {
       (task) => task.status === 'completed'
     );
     try {
-      await Promise.all( tasksToBeDeleted.map((task) => {
-        deleteTask(task);
-      }));
+      await Promise.all(
+        tasksToBeDeleted.map((task) => {
+          deleteTask(task);
+        })
+      );
     } catch (e) {
       console.log(e);
     }
@@ -68,19 +71,12 @@ export const useTasksQuery: () => Omit<TaskContextProps, 'setTasks'> = () => {
 
   const toggleTaskStatus = async (selectedTask: Task) => {
     if (!tasks) throw new Error('tasks is null');
-    const changedTask = tasks.find(
-      (task) => task.clientId === selectedTask.clientId
-    );
+
     try {
-      if (changedTask) {
-        const newStatus: Task['status'] =
-          changedTask.status === 'completed' ? 'inProgress' : 'completed';
-        const changedItem = {
-          ...changedTask,
-          status: newStatus,
-        };
-        await updateMutation.mutateAsync(changedItem);
-      }
+      const newStatus =
+        selectedTask.status === 'completed' ? 'inProgress' : 'completed';
+      const updatedTask: Task = { ...selectedTask, status: newStatus };
+      await statusMutation.mutateAsync(updatedTask);
     } catch (e) {
       console.log(e);
     }
