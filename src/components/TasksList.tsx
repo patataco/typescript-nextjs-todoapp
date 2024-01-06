@@ -8,7 +8,6 @@ import TaskItem from './TaskItem';
 
 type TaskListProps = HTMLAttributes<HTMLUListElement> & { tasks: Task[] };
 const TasksList = ({ tasks, ...props }: TaskListProps) => {
-  const { isChecked, setIsChecked, handleCheck } = useCheckbox(false);
 
   return (
     <ul className="w-full" {...props}>

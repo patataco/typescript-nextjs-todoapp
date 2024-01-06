@@ -14,7 +14,6 @@ const TaskItem = ({ task }: { task: Task }) => {
   const { inputValue, setInputValue, handleInput } = useInput(task.title);
   const { updateTask, toggleTaskStatus, deleteTask } = useTasksManager();
   const [titleStatus, setTitleStatus] = useState(false);
-
   const saveEdit = () => {
     setTitleStatus(false);
   };
@@ -35,17 +34,19 @@ const TaskItem = ({ task }: { task: Task }) => {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
       const updatedTask = { ...task, title: inputValue };
       updateTask(updatedTask);
       saveEdit();
       return;
     }
-    if (e.key === 'Escape' && e.nativeEvent.isComposing === false) {
+    if (e.key === 'Escape' && !e.nativeEvent.isComposing) {
       setInputValue(task.title);
       saveEdit();
     }
   };
+
+
   return (
     <li
       key={task.id}
@@ -55,7 +56,7 @@ const TaskItem = ({ task }: { task: Task }) => {
         checked={task.status === 'completed'}
         onChange={handleCheck}
         data-testid={task.title}
-        id={task.title}
+        id={task.id ?? ''}
         className={
           'relative block h-5 w-5 cursor-pointer rounded-full border border-blue-300'
         }
@@ -90,8 +91,8 @@ const TaskItem = ({ task }: { task: Task }) => {
       >
         ✖️
       </Button>
-      {/* <div className="w-[80px] truncate text-sm">{`clientId: ${task.clientId}`}</div>
-      <div className="w-[80px] truncate text-sm">{`serverId: ${task.id}`}</div> */}
+      {/* <div className="w-[80px] truncate text-sm">{`clientId: ${task.clientId}`}</div>*/}
+      {/*<div className="w-[80px] truncate text-sm">{`serverId: ${task.id}`}</div>*/}
     </li>
   );
 };

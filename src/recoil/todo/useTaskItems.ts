@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 
 import { TaskContextProps } from '@/context/TaskContext';
 import { Task } from '@/type/type';
-
+import { v4 as uuidv4 } from 'uuid';
 import { tasksState } from './atom';
 
 export const useTasksItems: () => TaskContextProps = () => {
@@ -23,7 +23,7 @@ export const useTasksItems: () => TaskContextProps = () => {
 
   const addTask = (value: string) => {
     const newTask: Task = {
-      clientId: new Date().getTime().toString(36),
+      clientId: uuidv4(),
       title: value,
       content: '',
       categories: [],
@@ -32,14 +32,13 @@ export const useTasksItems: () => TaskContextProps = () => {
       dueDateTime: null,
       createdDateTime: new Date(),
       lastModifiedDateTime: new Date(),
-      id: '',
+      id: uuidv4(),
     };
 
     setTasks((prev) => [...prev, newTask]);
   };
 
   const updateTask = (selectedTask: Task) => {
-    console.log(selectedTask);
     const updatedTasks = tasks.map((task) => {
       if (task.id === selectedTask.id) {
         return { ...task, ...selectedTask };

@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 
 import { versionAtom } from '@/recoil/todo/atom';
 import { Task } from '@/type/type';
+import { v4 as uuidv4 } from 'uuid';
 
 export type InitialTaskProps = {
   initialTask: Task[];
@@ -42,7 +43,7 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
 
   const addTask = (value: string) => {
     const newTask: Task = {
-      clientId: new Date().getTime().toString(36),
+      clientId: uuidv4(),
       title: value,
       content: '',
       categories: [],
@@ -51,7 +52,7 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
       dueDateTime: null,
       createdDateTime: new Date(),
       lastModifiedDateTime: new Date(),
-      id: '',
+      id: uuidv4(),
     };
 
     setTasks((prev) => [...prev, newTask]);
@@ -68,17 +69,16 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   };
 
   const toggleTaskStatus = (selectedTask: Task) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === selectedTask.id) {
+    const updatedTasks= tasks.map((task)=>{
+      if(task.id === selectedTask.id){
         const newStatus: Task['status'] =
           task.status === 'completed' ? 'inProgress' : 'completed';
         return {
-          ...task,
-          status: newStatus,
-        };
+          ...task, status:newStatus
+        }
       }
-      return task;
-    });
+    return task
+    })
     setTasks(updatedTasks);
   };
   const deleteTask = (selectedTask: Task) => {

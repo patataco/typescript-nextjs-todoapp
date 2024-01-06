@@ -8,6 +8,7 @@ import {
 } from '@/service/mutation/useMutateTasks';
 import { useTasks } from '@/service/useTasks';
 import { Task } from '@/type/type';
+import { promise } from 'zod'
 
 export const useTasksQuery: () => Omit<TaskContextProps, 'setTasks'> = () => {
   const updateMutation = useUpdateTasks();
@@ -38,9 +39,9 @@ export const useTasksQuery: () => Omit<TaskContextProps, 'setTasks'> = () => {
       (task) => task.status === 'completed'
     );
     try {
-      await tasksToBeDeleted.map((task) => {
+      await Promise.all( tasksToBeDeleted.map((task) => {
         deleteTask(task);
-      });
+      }));
     } catch (e) {
       console.log(e);
     }
