@@ -38,9 +38,9 @@ export const useTasksServer: () => TaskContextProps = () => {
   };
 
   const toggleTaskStatus = async (selectedTask: Task) => {
-    console.log('아이디',selectedTask);
+    console.log('아이디', selectedTask);
     const changedTask = tasks.find((task) => task.id === selectedTask.id);
-    console.log('changedTask',changedTask)
+    console.log('changedTask', changedTask);
     if (changedTask) {
       const newStatus: Task['status'] =
         changedTask.status === 'completed' ? 'inProgress' : 'completed';
@@ -62,9 +62,7 @@ export const useTasksServer: () => TaskContextProps = () => {
 
   const deleteAllTasks = async () => {
     const taskTobeDeleted = tasks.filter((task) => task.status === 'completed');
-     await Promise.all( taskTobeDeleted.map((task) =>
-      deleteTasks(task)
-    ));
+    await Promise.all(taskTobeDeleted.map((task) => deleteTasks(task)));
     const { data } = await getTasks();
     setTasks(data);
   };

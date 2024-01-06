@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil';
 
 import { getTasks } from '@/api/getTasks';
 import Layout from '@/components/Layout';
@@ -12,7 +12,6 @@ export default function V3() {
   const setVersionType = useSetRecoilState(versionAtom);
   const [initialTasks, setInitialTasks] = useState<Task[] | null>([]);
   const setTasks = useSetRecoilState(tasksServer);
-
 
   useEffect(() => {
     const fetchData = async () => {

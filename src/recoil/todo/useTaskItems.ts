@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 
 import { TaskContextProps } from '@/context/TaskContext';
 import { Task } from '@/type/type';
-import { v4 as uuidv4 } from 'uuid';
+
 import { tasksState } from './atom';
 
 export const useTasksItems: () => TaskContextProps = () => {

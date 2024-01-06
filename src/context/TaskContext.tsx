@@ -8,10 +8,10 @@ import {
   useState,
 } from 'react';
 import { useRecoilValue } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 
 import { versionAtom } from '@/recoil/todo/atom';
 import { Task } from '@/type/type';
-import { v4 as uuidv4 } from 'uuid';
 
 export type InitialTaskProps = {
   initialTask: Task[];
@@ -69,16 +69,17 @@ export const TaskProvider = ({ initialTask, children }: TaskProviderProps) => {
   };
 
   const toggleTaskStatus = (selectedTask: Task) => {
-    const updatedTasks= tasks.map((task)=>{
-      if(task.id === selectedTask.id){
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === selectedTask.id) {
         const newStatus: Task['status'] =
           task.status === 'completed' ? 'inProgress' : 'completed';
         return {
-          ...task, status:newStatus
-        }
+          ...task,
+          status: newStatus,
+        };
       }
-    return task
-    })
+      return task;
+    });
     setTasks(updatedTasks);
   };
   const deleteTask = (selectedTask: Task) => {
