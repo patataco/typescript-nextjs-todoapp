@@ -49,6 +49,11 @@ const NavDropdownMenu = () => {
           </ListItem>
         </li>
         <li className="w-full">
+          <ListItem href="/test-spec" title="Test Spec">
+            테스트 시나리오
+          </ListItem>
+        </li>
+        <li className="w-full">
           <ListItem href="/todo/v1" title="v1">
             Context API를 활용한 상태관리
           </ListItem>
