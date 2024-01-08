@@ -25,12 +25,12 @@ export default function V1() {
   if (!initialTasks) return;
 
   return (
-    <>
+    <div className="flex flex-col items-center gap-8 pt-12">
       <TaskProvider initialTask={initialTasks}>
-        <h1>Context Api</h1>
+        <h2>Context API 활용</h2>
         <TodoListView />
       </TaskProvider>
-    </>
+    </div>
   );
 }
 

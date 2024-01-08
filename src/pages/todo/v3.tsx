@@ -26,12 +26,12 @@ export default function V3() {
   if (!initialTasks) return;
 
   return (
-    <>
+    <div className="flex flex-col items-center gap-8 pt-12">
       <TaskProvider initialTask={initialTasks}>
-        <h1>REST API</h1>
+        <h2>REST API로 Data Fetching하기</h2>
         <TodoListView />
       </TaskProvider>
-    </>
+    </div>
   );
 }
 

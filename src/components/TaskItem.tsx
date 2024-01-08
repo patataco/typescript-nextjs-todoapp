@@ -49,7 +49,7 @@ const TaskItem = ({ task }: { task: Task }) => {
   return (
     <li
       key={task.id}
-      className=" group flex w-full items-center gap-2 p-1 shadow-[0_3px_3px_-3px_rgba(0,0,0,0.3)]"
+      className=" group flex max-w-[280px] items-center gap-2 p-1 shadow-[0_3px_3px_-3px_rgba(0,0,0,0.3)] md:max-w-[520px]"
     >
       <Checkbox
         checked={task.status === 'completed'}
@@ -57,7 +57,7 @@ const TaskItem = ({ task }: { task: Task }) => {
         data-testid={task.title}
         id={task.id ?? ''}
         className={
-          'relative block h-5 w-5 cursor-pointer rounded-full border border-blue-300'
+          'relative block h-5 w-5 shrink-0 cursor-pointer rounded-full border border-blue-300'
         }
       />
       <div onClick={handleClickTitle} className="flex-1">
@@ -66,7 +66,7 @@ const TaskItem = ({ task }: { task: Task }) => {
             value={inputValue}
             className={`${
               task.status === 'completed' ? 'line-through' : ''
-            } h-8 w-full text-blue-950`}
+            } h-6 w-full text-blue-950`}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
             onBlur={handleInputFocusing}
@@ -76,7 +76,7 @@ const TaskItem = ({ task }: { task: Task }) => {
           <p
             className={`${
               task.status === 'completed' ? 'text-slate-300 line-through' : ''
-            } w-full max-w-[450px] overflow-hidden whitespace-pre-wrap text-blue-950`}
+            } w-full break-all text-blue-950`}
           >
             {inputValue}
           </p>
@@ -85,7 +85,7 @@ const TaskItem = ({ task }: { task: Task }) => {
       <Button
         name="delete"
         data-testid={`button-${task.title}`}
-        className="invisible h-10 w-10 text-sm text-slate-400 group-hover:visible "
+        className="invisible h-8 w-6 shrink-0 text-sm text-slate-400 group-hover:visible "
         onClick={handleDeleteButtonClick}
       >
         ✖️

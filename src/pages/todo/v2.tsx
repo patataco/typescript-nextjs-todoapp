@@ -24,12 +24,12 @@ export default function V2() {
   if (!initialTasks) return;
 
   return (
-    <>
+    <div className="flex flex-col items-center gap-8 pt-12">
       <TaskProvider initialTask={initialTasks}>
-        <h1>Recoil</h1>
+        <h2>Recoil 활용</h2>
         <TodoListView />
       </TaskProvider>
-    </>
+    </div>
   );
 }
 

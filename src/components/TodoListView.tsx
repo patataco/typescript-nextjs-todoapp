@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import TasksList from '@/components/TasksList';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Task } from '@/type/type';
 
 import { useTasksManager } from '../../hooks/useTaskManager';
@@ -31,25 +32,22 @@ const TodoListView = () => {
     (task: Task) => task.status === 'completed'
   );
   return (
-    <div className="flex h-full items-center justify-center bg-blue-100">
-      <div className="mx-auto flex max-w-5xl items-center justify-center ">
-        <div className="h-[800px] w-[600px]  bg-gray-50 ">
-          <div className="flex flex-col items-center gap-6 px-10 py-9">
-            <h1 className="text-blue-950">ToDo List</h1>
-            <NewTask />
-            <div className="flex w-full flex-col">
-              <TasksList
-                data-testid="inProgress-section"
-                tasks={uncompletedList}
-              />
-              <TasksList
-                data-testid="completed-section"
-                tasks={completedList}
-              />
-            </div>
+    <div className="flex h-full justify-center">
+      <div className="flex h-[600px] w-[360px] flex-col rounded-md bg-white md:h-[720px] md:w-[600px] md:max-w-none">
+        <div className="flex flex-col items-center gap-6 px-10 py-6 ">
+          <h2 className="text-blue-950">ToDo List</h2>
+          <NewTask />
+        </div>
+        <ScrollArea className="flex flex-col  px-10 pb-4">
+          <div className="flex flex-col gap-3">
+            <TasksList
+              data-testid="inProgress-section"
+              tasks={uncompletedList}
+            />
+            <TasksList data-testid="completed-section" tasks={completedList} />
             <TodoFooter />
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );

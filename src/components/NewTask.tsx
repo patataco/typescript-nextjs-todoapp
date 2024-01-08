@@ -41,7 +41,7 @@ const NewTask = () => {
       <Button
         disabled={inputValue.length < 1}
         onClick={handleAddButtonClick}
-        className="flex h-6 w-6 items-center justify-center bg-slate-400 text-xl"
+        className="flex h-6 w-6 items-center justify-center bg-sky-200 text-2xl font-black text-white"
       >
         +
       </Button>

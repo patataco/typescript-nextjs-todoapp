@@ -9,8 +9,13 @@ const TodoFooter = () => {
     deleteAllTasks();
   };
   return (
-    <div>
-      <Button onClick={handleClearButton}>Clear All</Button>
+    <div className="mx-auto">
+      <Button
+        onClick={handleClearButton}
+        className="rounded-lg bg-slate-200 px-2 py-1"
+      >
+        ✨ Clear All
+      </Button>
     </div>
   );
 };

@@ -18,12 +18,14 @@ export default function V4() {
   if (!initialTasks) return;
 
   return (
-    <>
+    <div className="flex flex-col items-center gap-8 pt-12">
       <TaskProvider initialTask={initialTasks}>
-        <h1>React Query Optimistic Updates</h1>
+        <h2 className="text-center">
+          React Query로 Optimistic Updates구현하기
+        </h2>
         <TodoListView />
       </TaskProvider>
-    </>
+    </div>
   );
 }
 

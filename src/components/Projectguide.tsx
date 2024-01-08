@@ -51,7 +51,6 @@ const Projectguide = () => {
                     })}
                   </ul>
                 }
-                {/* <div className="pt-4 ml-6">{table}</div> */}
               </li>
             );
           })}
